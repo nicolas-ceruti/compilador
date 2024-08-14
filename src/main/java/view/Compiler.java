@@ -9,6 +9,14 @@ public class Compiler extends JFrame{
     private JTextArea editor;
     private JTextArea mensagens;
     private JPanel panelMain;
+    private JButton buttonNovo;
+    private JButton buttonAbrir;
+    private JButton buttonSalvar;
+    private JButton buttonCopiar;
+    private JButton buttonColar;
+    private JButton buttonRecortar;
+    private JButton buttonCompilar;
+    private JButton buttonEquipe;
 
 
     public Compiler() {
@@ -34,7 +42,16 @@ public class Compiler extends JFrame{
         this.labelLinhas.setText("<html>" + linhas.toString() + "</html>");
     }
 
-  
+    private void adicionarMensagem(String mensagem) {
+        String text = this.mensagens.getText();
+        StringBuilder stringMensagens = new StringBuilder();
+
+        stringMensagens.append(text);
+        stringMensagens.append("</br>");
+        stringMensagens.append(mensagem);
+
+        this.mensagens.setText("<html>" + stringMensagens + "</html>");
+    }
 
     public static void main(String[] args) {
         Compiler frame = new Compiler();
