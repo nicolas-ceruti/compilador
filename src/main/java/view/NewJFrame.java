@@ -22,6 +22,25 @@ public class NewJFrame extends javax.swing.JFrame {
 
     }
 
+    private void contarLinhas() {
+        String text = this.editor.getText();
+
+        String[] lines = text.split("\n");
+        int qttRows = text.split("\n", -1).length;
+
+        System.out.println(text);
+        System.out.println(qttRows);
+        StringBuilder linhas = new StringBuilder();
+        for (int i = 1; i <= qttRows; i++) {
+            if (i > 1) {
+                linhas.append("<br>"); // Adiciona quebra de linha HTML
+            }
+            linhas.append(i);
+        }
+
+        this.labelLinhas.setText("<html>" + linhas.toString() + "</html>");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +57,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         labelLinhas = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -76,7 +96,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jSplitPane1.setDividerLocation(400);
+        jSplitPane1.setDividerLocation(300);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         jTextArea1.setBackground(new java.awt.Color(204, 204, 204));
@@ -95,13 +115,37 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jSplitPane1.setBottomComponent(jScrollPane3);
 
+        jPanel2.setMaximumSize(new java.awt.Dimension(1920, 500));
+
         labelLinhas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelLinhas.setText("1");
         labelLinhas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         editor.setColumns(20);
+        editor.setLineWrap(true);
         editor.setRows(5);
+        editor.setWrapStyleWord(true);
+        editor.setAutoscrolls(false);
+        editor.setMaximumSize(new java.awt.Dimension(5000, 5000));
+        editor.setMinimumSize(new java.awt.Dimension(200, 200));
+        editor.setPreferredSize(new java.awt.Dimension(900, 400));
+        editor.setSize(new java.awt.Dimension(900, 400));
+        editor.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                editorInputMethodTextChanged(evt);
+            }
+        });
+        editor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                editorPropertyChange(evt);
+            }
+        });
         editor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                editorKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 editorKeyTyped(evt);
             }
@@ -114,23 +158,23 @@ public class NewJFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelLinhas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(labelLinhas, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(labelLinhas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                    .addComponent(labelLinhas)))
         );
 
-        jSplitPane1.setLeftComponent(jPanel2);
+        jScrollPane1.setViewportView(jPanel2);
+
+        jSplitPane1.setTopComponent(jScrollPane1);
 
         jToolBar1.setBackground(new java.awt.Color(0, 102, 153));
         jToolBar1.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -277,10 +321,10 @@ public class NewJFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -288,7 +332,7 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -329,16 +373,21 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void editorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editorKeyTyped
-        // TODO add your handling code here:
-        if (this.editor.getText() != null && !this.editor.getText().isEmpty()) {
-            Integer qttRows = this.editor.getText().split("\n").length;
-            StringBuilder linhas = new StringBuilder("1");
-            for (int i = 2; i <= qttRows; i++) {
-                linhas.append("<br>").append(i);
-            }
-            this.labelLinhas.setText("<html>" + linhas.toString() + "</html>");
-        }
+//        contarLinhas() ;
     }//GEN-LAST:event_editorKeyTyped
+
+    private void editorPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_editorPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editorPropertyChange
+
+    private void editorInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_editorInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editorInputMethodTextChanged
+
+    private void editorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editorKeyReleased
+        // TODO add your handling code here:
+        contarLinhas();
+    }//GEN-LAST:event_editorKeyReleased
 
     /**
      * @param args the command line arguments
@@ -389,6 +438,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
