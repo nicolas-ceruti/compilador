@@ -1,10 +1,25 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class Compiler extends JFrame{
+public class Compiler extends JFrame {
     private JLabel labelLinhas;
     private JTextArea editor;
     private JTextArea mensagens;
@@ -24,6 +39,32 @@ public class Compiler extends JFrame{
             @Override
             public void keyReleased(KeyEvent e) {
                 contarLinhas();
+            }
+        });
+
+        buttonAbrir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    if (selectedFile.length() > 0) {
+                        editor.setText(null);
+                        try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                editor.append(line + "\n");
+                            }
+                            contarLinhas();
+                        } catch (IOException er) {
+                            throw new RuntimeException(er);
+                        }
+                    }
+                }
             }
         });
     }
