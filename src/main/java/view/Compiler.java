@@ -1,7 +1,6 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,15 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import java.awt.event.*;
+import java.time.LocalDateTime;
 
 public class Compiler extends JFrame {
     private JLabel labelLinhas;
@@ -67,7 +62,24 @@ public class Compiler extends JFrame {
                 }
             }
         });
+
+        buttonEquipe.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                adicionarMensagem("Equipe: Nicolas Andrei Ceruti, Gustavo Henrique Campestrini, Julia Welter");
+            }
+        });
+
+        defineTeclasDeAtalho();
+
+        buttonCompilar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                adicionarMensagem("compilação de programas ainda não foi implementada");
+            }
+        });
     }
+
 
     private void contarLinhas() {
         String text = this.editor.getText();
@@ -84,14 +96,10 @@ public class Compiler extends JFrame {
     }
 
     private void adicionarMensagem(String mensagem) {
-        String text = this.mensagens.getText();
-        StringBuilder stringMensagens = new StringBuilder();
+        String novaMensagem = "\n" + LocalDateTime.now() + "  |  " + mensagem;
+        String novaLista = this.mensagens.getText() + novaMensagem;
 
-        stringMensagens.append(text);
-        stringMensagens.append("</br>");
-        stringMensagens.append(mensagem);
-
-        this.mensagens.setText("<html>" + stringMensagens + "</html>");
+        this.mensagens.setText(novaLista);
     }
 
     public static void main(String[] args) {
@@ -101,6 +109,91 @@ public class Compiler extends JFrame {
         frame.setSize(900, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void defineTeclasDeAtalho() {
+        Action acaoNovo = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonNovo.doClick();
+            }
+        };
+        Action acaoAbrir = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonAbrir.doClick();
+            }
+        };
+        Action acaoSalvar = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonSalvar.doClick();
+            }
+        };
+
+        Action acaoCopiar = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonCopiar.doClick();
+            }
+        };
+
+        Action acaoColar = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonColar.doClick();
+            }
+        };
+
+        Action acaoRecortar = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonRecortar.doClick();
+            }
+        };
+
+        Action acaoCompilar = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonCompilar.doClick();
+            }
+        };
+
+        Action acaoEquipe = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonEquipe.doClick();
+            }
+        };
+
+        // Configure InputMap e ActionMap para o nível de janela
+        InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = getRootPane().getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK), "novo");
+        actionMap.put("novo", acaoNovo);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK), "abrir");
+        actionMap.put("abrir", acaoAbrir);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), "salvar");
+        actionMap.put("salvar", acaoSalvar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK), "copiar");
+        actionMap.put("copiar", acaoCopiar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK), "colar");
+        actionMap.put("colar", acaoColar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK), "recortar");
+        actionMap.put("recortar", acaoRecortar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0), "compilar");
+        actionMap.put("compilar", acaoCompilar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "equipe");
+        actionMap.put("equipe", acaoEquipe);
+
     }
 
 
