@@ -1,5 +1,6 @@
 package view;
 
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -31,6 +32,8 @@ public class Compiler extends JFrame {
 
 
     public Compiler() {
+
+
         editor.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -41,26 +44,7 @@ public class Compiler extends JFrame {
         buttonAbrir.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    if (selectedFile.length() > 0) {
-                        editor.setText(null);
-                        try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                editor.append(line + "\n");
-                            }
-                            contarLinhas();
-                        } catch (IOException er) {
-                            throw new RuntimeException(er);
-                        }
-                    }
-                }
+                acaoBotaoNovo();
             }
         });
 
@@ -68,41 +52,45 @@ public class Compiler extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                adicionarMensagem("Equipe: Nicolas Andrei Ceruti, Gustavo Henrique Campestrini, Julia Welter");
+                acaoBotaoEquipe();
             }
         });
-
-        defineTeclasDeAtalho();
 
         buttonCompilar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                adicionarMensagem("compilação de programas ainda não foi implementada");
+                acaoBotaoCompilar();
             }
         });
-        buttonCopiar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                editor.copy();
-            }
-        });
+
+
         buttonColar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                editor.paste();
+                acaoBotaoColar();
 
             }
         });
+
         buttonRecortar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                editor.cut();
-                contarLinhas();
+                acaoBotaoRecortar();
             }
         });
+
+        buttonCopiar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                acaoBotaoCopiar();
+            }
+        });
+
+        defineTeclasDeAtalho();
+
     }
 
 
@@ -127,6 +115,67 @@ public class Compiler extends JFrame {
         this.mensagens.setText(novaLista);
     }
 
+    private void acaoBotaoEquipe() {
+        adicionarMensagem("Equipe: Nicolas Andrei Ceruti, Gustavo Henrique Campestrini, Julia Welter");
+    }
+
+    private void acaoBotaoCompilar() {
+        adicionarMensagem("compilação de programas ainda não foi implementada");
+    }
+
+    private void acaoBotaoNovo() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            if (selectedFile.length() > 0) {
+                editor.setText(null);
+                try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        editor.append(line + "\n");
+                    }
+                    contarLinhas();
+                } catch (IOException er) {
+                    throw new RuntimeException(er);
+                }
+            }
+        }
+    }
+
+    private void acaoBotaoRecortar() {
+        try {
+            editor.selectAll();
+            editor.cut();
+            contarLinhas();
+            adicionarMensagem("Texto Recortado");
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+
+    private void acaoBotaoColar() {
+        try {
+            editor.paste();
+            contarLinhas();
+            adicionarMensagem("Texto Colado");
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void acaoBotaoCopiar() {
+        try {
+            editor.selectAll();
+            editor.copy();
+            adicionarMensagem("Texto Copiado");
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public static void main(String[] args) {
         Compiler frame = new Compiler();
         frame.setContentPane(frame.panelMain);
@@ -136,11 +185,12 @@ public class Compiler extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+
     private void defineTeclasDeAtalho() {
         Action acaoNovo = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonNovo.doClick();
+                acaoBotaoNovo();
             }
         };
         Action acaoAbrir = new AbstractAction() {
@@ -159,35 +209,35 @@ public class Compiler extends JFrame {
         Action acaoCopiar = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonCopiar.doClick();
+                acaoBotaoCopiar();
             }
         };
 
         Action acaoColar = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonColar.doClick();
+                acaoBotaoColar();
             }
         };
 
         Action acaoRecortar = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonRecortar.doClick();
+                acaoBotaoRecortar();
             }
         };
 
         Action acaoCompilar = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonCompilar.doClick();
+                acaoBotaoCompilar();
             }
         };
 
         Action acaoEquipe = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonEquipe.doClick();
+                acaoBotaoEquipe();
             }
         };
 
