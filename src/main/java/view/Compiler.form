@@ -3,10 +3,11 @@
   <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="881" height="504"/>
+      <xy x="20" y="20" width="900" height="700"/>
     </constraints>
     <properties>
       <background color="-1"/>
+      <minimumSize width="900" height="700"/>
     </properties>
     <border type="none"/>
     <children>
@@ -68,6 +69,7 @@
                 <constraints/>
                 <properties>
                   <editable value="false"/>
+                  <enabled value="false"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -96,16 +98,17 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Novo [Ctrl+n]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="novo-arquivo.png"/>
+              <iconTextGap value="1"/>
+              <inheritsPopupMenu value="true"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Novo&lt;br&gt;[Ctrl + N]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Novo [Ctrl+n]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Novo&lt;br&gt;[Ctrl + N]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="77b4b" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="5ebc" class="javax.swing.JButton" binding="buttonAbrir">
             <constraints/>
@@ -116,16 +119,15 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Abrir [Ctrl+o]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="abrir.png"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Abrir&lt;br&gt;[Ctrl + O]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Abrir [Ctrl+o]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Abrir&lt;br&gt;[Ctrl + O]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="37ddb" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="69ff6" class="javax.swing.JButton" binding="buttonSalvar">
             <constraints/>
@@ -136,16 +138,15 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Salvar [Ctrl+s]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="salve-.png"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Salvar&lt;br&gt;[Ctrl + S]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Salvar [Ctrl+s]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Salvar&lt;br&gt;[Ctrl + S]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="4276a" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="763a7" class="javax.swing.JButton" binding="buttonCopiar">
             <constraints/>
@@ -156,16 +157,15 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Copiar [Ctrl+c]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="copiar-escrita.png"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Copiar&lt;br&gt;[Ctrl + C]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Copiar [Ctrl+c]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Copiar&lt;br&gt;[Ctrl + C]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="1dfd6" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="a3a4f" class="javax.swing.JButton" binding="buttonColar">
             <constraints/>
@@ -175,17 +175,16 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="colar.png"/>
               <inheritsPopupMenu value="false"/>
-              <label value="Colar [Ctrl+v]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Colar&lt;br&gt;[Ctrl + V]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Colar [Ctrl+v]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Colar&lt;br&gt;[Ctrl + V]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="a44c7" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="7d1e3" class="javax.swing.JButton" binding="buttonRecortar">
             <constraints/>
@@ -196,16 +195,15 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Recortar [Ctrl+x]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="corte.png"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Colar&lt;br&gt;[Ctrl + X]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Recortar [Ctrl+x]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Colar&lt;br&gt;[Ctrl + X]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="bd3cd" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="64fdd" class="javax.swing.JButton" binding="buttonCompilar">
             <constraints/>
@@ -215,30 +213,33 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Compilar [F7]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="botao-play-ponta-de-seta.png"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Compilar&lt;br&gt;[F7]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Compilar [F7]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Compilar&lt;br&gt;[F7]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
-          </component>
-          <component id="93700" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
           </component>
           <component id="b17ee" class="javax.swing.JButton" binding="buttonEquipe">
             <constraints/>
             <properties>
+              <actionCommand value="&lt;html&gt;Equipe&lt;br&gt;[F1]&lt;/html&gt;"/>
               <background color="-1"/>
               <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono Slashed" size="14" style="1"/>
               <foreground color="-16777216"/>
-              <label value="Equipe [F1]"/>
-              <margin top="5" left="15" bottom="5" right="15"/>
-              <minimumSize width="100" height="60"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="equipe.png"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Equipe&lt;br&gt;[F1]&lt;/div&gt;&lt;/html&gt;"/>
+              <margin top="5" left="5" bottom="5" right="0"/>
+              <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="Equipe [F1]"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Equipe&lt;br&gt;[F1]&lt;/div&gt;&lt;/html&gt;"/>
+              <verticalTextPosition value="3"/>
             </properties>
           </component>
         </children>

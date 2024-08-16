@@ -3,6 +3,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -195,10 +196,12 @@ public class Compiler extends JFrame {
     }
 
     public static void main(String[] args) {
+
         Compiler frame = new Compiler();
         frame.setContentPane(frame.panelMain);
         frame.setTitle("Compilador");
         frame.setSize(900, 700);
+        frame.setMinimumSize(new Dimension(900, 700));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
