@@ -32,6 +32,7 @@ public class Compiler extends JFrame {
     private JButton buttonCompilar;
     private JButton buttonEquipe;
     private JLabel arquivo;
+    private JToolBar toolBar;
 
     private File currentFile;
 
@@ -52,7 +53,7 @@ public class Compiler extends JFrame {
         buttonSalvar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                acaoSalvar();
+                acaoBotaoSalvar();
             }
         });
 
@@ -104,6 +105,8 @@ public class Compiler extends JFrame {
             }
         });
 
+        toolBar.setMinimumSize(new Dimension(900, 70));
+
         defineTeclasDeAtalho();
 
     }
@@ -120,7 +123,7 @@ public class Compiler extends JFrame {
             }
             linhas.append(i);
         }
-        this.labelLinhas.setText("<html>" + linhas.toString() + "</html>");
+        this.labelLinhas.setText("<html>" + linhas + "</html>");
     }
 
     private void adicionarMensagem(String mensagem) {
@@ -149,7 +152,7 @@ public class Compiler extends JFrame {
         arquivo.setText(null);
     }
 
-    private void acaoSalvar() {
+    private void acaoBotaoSalvar() {
         if (this.currentFile == null) {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Salvar Arquivo");
@@ -250,7 +253,7 @@ public class Compiler extends JFrame {
         frame.setContentPane(frame.panelMain);
         frame.setTitle("Compilador");
         frame.setSize(900, 700);
-        frame.setMinimumSize(new Dimension(900, 700));
+        frame.setMinimumSize(new Dimension(900, 500));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -272,7 +275,7 @@ public class Compiler extends JFrame {
         Action acaoSalvar = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonSalvar.doClick();
+                acaoBotaoSalvar();
             }
         };
 
