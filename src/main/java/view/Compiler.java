@@ -9,8 +9,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.awt.event.*;
@@ -31,10 +33,9 @@ public class Compiler extends JFrame {
     private JButton buttonEquipe;
     private JLabel arquivo;
 
+    private File currentFile;
 
     public Compiler() {
-
-
         editor.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -48,6 +49,13 @@ public class Compiler extends JFrame {
                 acaoBotaoAbrir();
             }
         });
+        buttonSalvar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                acaoSalvar();
+            }
+        });
+
         buttonNovo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -129,6 +137,7 @@ public class Compiler extends JFrame {
     private void acaoBotaoCompilar() {
         adicionarMensagem("compilação de programas ainda não foi implementada");
     }
+
     private void acaoBotaoNovo() {
         clearAll();
     }
@@ -136,8 +145,47 @@ public class Compiler extends JFrame {
     private void clearAll() {
         editor.setText(null);
         contarLinhas();
-        mensagens.setText(null);
+        limparMenssagens();
         arquivo.setText(null);
+    }
+
+    private void acaoSalvar() {
+        if (this.currentFile == null) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Salvar Arquivo");
+
+            int userSelection = fileChooser.showSaveDialog(null);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+
+                if (!fileToSave.getAbsolutePath().endsWith(".txt")) {
+                    fileToSave = new File(fileToSave + ".txt");
+                }
+
+                try (FileWriter writer = new FileWriter(fileToSave)) {
+                    writer.write(editor.getText());
+                    arquivo.setText(fileToSave.getPath());
+                    this.currentFile = fileToSave;
+                    JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!");
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar o arquivo: " + e.getMessage());
+                }
+            }
+        } else {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(currentFile))) {
+                writer.write(editor.getText());
+                JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar o arquivo: " + e.getMessage());
+            }
+        }
+
+        limparMenssagens();
+    }
+
+    private void limparMenssagens() {
+        mensagens.setText(null);
     }
 
     private void acaoBotaoAbrir() {
@@ -155,6 +203,7 @@ public class Compiler extends JFrame {
                         editor.append(line + "\n");
                     }
                     contarLinhas();
+                    this.currentFile = selectedFile;
                     arquivo.setText(selectedFile.getPath());
                 } catch (IOException er) {
                     throw new RuntimeException(er);
