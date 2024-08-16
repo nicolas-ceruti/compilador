@@ -16,6 +16,8 @@
           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <dividerLocation value="300"/>
+          <dividerSize value="10"/>
           <orientation value="0"/>
         </properties>
         <border type="none"/>
@@ -41,7 +43,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-4802373"/>
-                      <text value=""/>
+                      <text value="1"/>
                     </properties>
                   </component>
                   <component id="c819c" class="javax.swing.JTextArea" binding="editor">
@@ -53,6 +55,7 @@
                     </constraints>
                     <properties>
                       <background color="-1"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -69,6 +72,8 @@
               <component id="aea8c" class="javax.swing.JTextArea" binding="mensagens">
                 <constraints/>
                 <properties>
+                  <background color="-16777216"/>
+                  <caretColor color="-16777216"/>
                   <editable value="false"/>
                   <enabled value="false"/>
                   <minimumSize width="2000" height="1000"/>
@@ -249,7 +254,10 @@
       </toolbar>
       <component id="d3127" class="javax.swing.JLabel" binding="arquivo">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="910" height="25"/>
+            <preferred-size width="910" height="25"/>
+          </grid>
         </constraints>
         <properties>
           <background color="-1"/>

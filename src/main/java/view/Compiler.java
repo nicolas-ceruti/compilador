@@ -105,7 +105,7 @@ public class Compiler extends JFrame {
             }
         });
 
-        toolBar.setMinimumSize(new Dimension(900, 70));
+        toolBar.setMinimumSize(new Dimension(910, 70));
 
         defineTeclasDeAtalho();
 
@@ -123,6 +123,7 @@ public class Compiler extends JFrame {
             }
             linhas.append(i);
         }
+
         this.labelLinhas.setText("<html>" + linhas + "</html>");
     }
 
@@ -252,8 +253,8 @@ public class Compiler extends JFrame {
         Compiler frame = new Compiler();
         frame.setContentPane(frame.panelMain);
         frame.setTitle("Compilador");
-        frame.setSize(900, 700);
-        frame.setMinimumSize(new Dimension(900, 500));
+        frame.setSize(910, 600);
+        frame.setMinimumSize(new Dimension(910, 600));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
