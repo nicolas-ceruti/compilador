@@ -3,7 +3,6 @@ package view;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -29,6 +28,7 @@ public class Compiler extends JFrame {
     private JButton buttonRecortar;
     private JButton buttonCompilar;
     private JButton buttonEquipe;
+    private JLabel arquivo;
 
 
     public Compiler() {
@@ -42,6 +42,12 @@ public class Compiler extends JFrame {
         });
 
         buttonAbrir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                acaoBotaoAbrir();
+            }
+        });
+        buttonNovo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 acaoBotaoNovo();
@@ -122,14 +128,25 @@ public class Compiler extends JFrame {
     private void acaoBotaoCompilar() {
         adicionarMensagem("compilação de programas ainda não foi implementada");
     }
-
     private void acaoBotaoNovo() {
+        clearAll();
+    }
+
+    private void clearAll() {
+        editor.setText(null);
+        contarLinhas();
+        mensagens.setText(null);
+        arquivo.setText(null);
+    }
+
+    private void acaoBotaoAbrir() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.length() > 0) {
+                clearAll();
                 editor.setText(null);
                 try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
                     String line;
@@ -137,6 +154,7 @@ public class Compiler extends JFrame {
                         editor.append(line + "\n");
                     }
                     contarLinhas();
+                    arquivo.setText(selectedFile.getPath());
                 } catch (IOException er) {
                     throw new RuntimeException(er);
                 }
@@ -196,7 +214,7 @@ public class Compiler extends JFrame {
         Action acaoAbrir = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonAbrir.doClick();
+                acaoBotaoAbrir();
             }
         };
         Action acaoSalvar = new AbstractAction() {
