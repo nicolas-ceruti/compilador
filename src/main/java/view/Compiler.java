@@ -266,19 +266,37 @@ public class Compiler extends JFrame {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK), "novo");
         actionMap.put("novo", acaoNovo);
 
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.META_DOWN_MASK), "novo");
+        actionMap.put("novo", acaoNovo);
+
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK), "abrir");
+        actionMap.put("abrir", acaoAbrir);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.META_DOWN_MASK), "abrir");
         actionMap.put("abrir", acaoAbrir);
 
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), "salvar");
         actionMap.put("salvar", acaoSalvar);
 
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.META_DOWN_MASK), "salvar");
+        actionMap.put("salvar", acaoSalvar);
+
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK), "copiar");
+        actionMap.put("copiar", acaoCopiar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.META_DOWN_MASK), "copiar");
         actionMap.put("copiar", acaoCopiar);
 
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK), "colar");
         actionMap.put("colar", acaoColar);
 
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.META_DOWN_MASK), "colar");
+        actionMap.put("colar", acaoColar);
+
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK), "recortar");
+        actionMap.put("recortar", acaoRecortar);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.META_DOWN_MASK), "recortar");
         actionMap.put("recortar", acaoRecortar);
 
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0), "compilar");
