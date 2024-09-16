@@ -1260,7 +1260,7 @@ public interface ScannerConstants
 
     String[] SCANNER_ERROR =
     {
-        "Caractere não esperado",
+        "Símbolo inválido",
         "",
         "",
         "Erro identificando palavraaspas",
@@ -1291,7 +1291,7 @@ public interface ScannerConstants
         "Erro identificando decimal",
         "",
         "Erro identificando <ignorar>",
-        "Erro identificando identificadora",
+        "Identificador Inválido",
         "",
         "",
         "Erro identificando <ignorar>",
@@ -1305,4 +1305,14 @@ public interface ScannerConstants
         ""
     };
 
+    // Método para calcular a linha com base na posição
+    public static int calculateLineFromPosition(int position, String text) {
+        int line = 1;
+        for (int i = 0; i < position; i++) {
+            if (text.charAt(i) == '\n') {
+                line++;
+            }
+        }
+        return line;
+    }
 }

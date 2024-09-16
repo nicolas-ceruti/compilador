@@ -3,6 +3,7 @@ package view;
 
 import controller.LexicalError;
 import controller.Lexico;
+import controller.ScannerConstants;
 import controller.Token;
 
 import javax.swing.*;
@@ -21,6 +22,8 @@ import java.io.IOException;
 
 import java.awt.event.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Compiler extends JFrame {
     private JLabel labelLinhas;
@@ -141,36 +144,41 @@ public class Compiler extends JFrame {
     private void acaoBotaoEquipe() {
         adicionarMensagem("Equipe: Nicolas Andrei Ceruti, Gustavo Henrique Campestrini, Julia Welter");
     }
-
     private void acaoBotaoCompilar() {
         Lexico lexico = new Lexico();
         lexico.setInput(editor.getText());
+
+        // Lista para armazenar as mensagens
+        List<String> mensagens = new ArrayList<>();
+
         try {
+            // Armazena o cabeçalho da tabela na lista
+            mensagens.add(String.format("%-15s %-15s %-5s\n", "Lexema", "Classe", "Linha"));
+            mensagens.add("----------------------------------------\n");
+
             Token t = null;
             while ( (t = lexico.nextToken()) != null ) {
-                System.out.println(t.getLexeme());
+                // Calcula a linha com base na posição do token
+                int line = ScannerConstants.calculateLineFromPosition(t.getPosition(), editor.getText());
 
-                // só escreve o lexema, necessário escrever t.getId, t.getPosition()
+                // Adiciona a mensagem formatada à lista
+                mensagens.add(String.format("%-15s %-15s %-5d\n", t.getLexeme(), t.getId(), line));
+            }
 
-                // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois
-                // deve ser apresentada a classe por extenso
-                // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar
-                // para mostrar a linha
-
-                // esse código apresenta os tokens enquanto não ocorrer erro
-                // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar
-                // para atender o que foi solicitado
+//            // Se o processo foi bem-sucedido, imprime todas as mensagens armazenadas
+            for (String mensagem : mensagens) {
+                adicionarMensagem(mensagem);
             }
         }
         catch ( LexicalError e ) {  // tratamento de erros
-            System.out.println(e.getMessage() + " em " + e.getPosition());
+            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
 
-            // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java
-            // e adaptar conforme o enunciado da parte 2)
-            // e.getPosition() - retorna a posição inicial do erro, tem que adaptar para mostrar a
-            // linha
+            // Se ocorrer um erro, limpa a lista de mensagens e exibe apenas a mensagem de erro
+            mensagens.clear();
+            adicionarMensagem(e.getMessage() + " na linha " + line);
         }
     }
+
 
     private void acaoBotaoNovo() {
         clearAll();
