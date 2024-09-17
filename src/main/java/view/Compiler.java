@@ -1,10 +1,7 @@
 package view;
 
 
-import controller.LexicalError;
-import controller.Lexico;
-import controller.ScannerConstants;
-import controller.Token;
+import controller.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -162,7 +159,7 @@ public class Compiler extends JFrame {
                 int line = ScannerConstants.calculateLineFromPosition(t.getPosition(), editor.getText());
 
                 // Adiciona a mensagem formatada à lista
-                mensagens.add(String.format("%-15s %-15s %-5d\n", t.getLexeme(), t.getId(), line));
+                mensagens.add(String.format("%-15s %-15s %-5d\n", t.getLexeme(), Constants.CLASSE_DESCRICAO[t.getId()], line));
             }
 
 //            // Se o processo foi bem-sucedido, imprime todas as mensagens armazenadas
@@ -173,9 +170,16 @@ public class Compiler extends JFrame {
         catch ( LexicalError e ) {  // tratamento de erros
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
 
-            // Se ocorrer um erro, limpa a lista de mensagens e exibe apenas a mensagem de erro
-            mensagens.clear();
-            adicionarMensagem(e.getMessage() + " na linha " + line);
+            char errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ?
+                    editor.getText().charAt(e.getPosition()) : '?';
+
+            // Se a mensagem de erro for "Símbolo inválido", inclui o caractere
+            if (e.getMessage().contains("Símbolo inválido")) {
+                adicionarMensagem("Linha " + line + ": " + e.getMessage() + " (Caractere: '" + errorChar + "')");
+            } else {
+                // Caso contrário, exibe a mensagem de erro sem o caractere
+                adicionarMensagem("Linha " + line + ": " + e.getMessage());
+            }
         }
     }
 
