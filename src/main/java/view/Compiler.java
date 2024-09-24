@@ -150,7 +150,7 @@ public class Compiler extends JFrame {
 
         try {
             // Armazena o cabeçalho da tabela na lista
-            mensagens.add(String.format("%-15s %-15s %-5s\n", "Lexema", "Classe", "Linha"));
+            mensagens.add(String.format("%-5s %-20s %-15s\n", "Linha", "Classe", "Lexema"));
             mensagens.add("----------------------------------------\n");
 
             Token t = null;
@@ -159,13 +159,14 @@ public class Compiler extends JFrame {
                 int line = ScannerConstants.calculateLineFromPosition(t.getPosition(), editor.getText());
 
                 // Adiciona a mensagem formatada à lista
-                mensagens.add(String.format("%-15s %-15s %-5d\n", t.getLexeme(), Constants.CLASSE_DESCRICAO[t.getId()], line));
+                mensagens.add(String.format("%-5d %-20s %-15s\n", line, Constants.CLASSE_DESCRICAO[t.getId()], t.getLexeme()));
             }
 
 //            // Se o processo foi bem-sucedido, imprime todas as mensagens armazenadas
             for (String mensagem : mensagens) {
                 adicionarMensagem(mensagem);
             }
+            adicionarMensagem("Programa compilado com sucesso!");
         }
         catch ( LexicalError e ) {  // tratamento de erros
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
@@ -174,12 +175,12 @@ public class Compiler extends JFrame {
                     editor.getText().charAt(e.getPosition()) : '?';
 
             // Se a mensagem de erro for "Símbolo inválido", inclui o caractere
-            if (e.getMessage().contains("Símbolo inválido")) {
-                adicionarMensagem("Linha " + line + ": " + e.getMessage() + " (Caractere: '" + errorChar + "')");
-            } else {
+//            if (e.getMessage().contains("Símbolo inválido")) {
+                adicionarMensagem("Linha " + line + ": " + errorChar +  " " + e.getMessage());
+//            } else {
                 // Caso contrário, exibe a mensagem de erro sem o caractere
-                adicionarMensagem("Linha " + line + ": " + e.getMessage());
-            }
+//                adicionarMensagem("Linha " + line + ": " + e.getMessage());
+//            }
         }
     }
 
