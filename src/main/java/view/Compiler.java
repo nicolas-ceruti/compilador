@@ -180,8 +180,7 @@ public class Compiler extends JFrame {
         } catch (LexicalError e) {
 
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
-            Character errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ?
-                    editor.getText().charAt(e.getPosition()) : null;
+            Character errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ? editor.getText().charAt(e.getPosition()) : null;
 
             adicionarMensagem("Linha " + line + ": " + (errorChar != null ? errorChar : "") + " " + e.getMessage());
         }

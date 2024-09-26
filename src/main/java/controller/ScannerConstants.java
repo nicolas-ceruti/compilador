@@ -300,7 +300,8 @@ public interface ScannerConstants
         {254, 3},
         {255, 3},
         {38, 27},
-        {59, 28},
+        {44, 28},
+        {44, 28},
         {48, 13},
         {49, 13},
         {50, 13},
@@ -311,7 +312,6 @@ public interface ScannerConstants
         {55, 13},
         {56, 13},
         {57, 13},
-        {59, 28},
         {61, 29},
         {64, 30},
         {65, 18},
@@ -1260,10 +1260,10 @@ public interface ScannerConstants
 
     String[] SCANNER_ERROR =
     {
-        "Símbolo inválido",
+        "Caractere não esperado",
         "",
         "",
-        "Constante string inválida",
+        "Erro identificando palavraaspas",
         "Erro identificando \"&&\"",
         "",
         "",
