@@ -158,6 +158,16 @@ public class Compiler extends JFrame {
                 // Calcula a linha com base na posição do token
                 int line = ScannerConstants.calculateLineFromPosition(t.getPosition(), editor.getText());
 
+
+                // Verifica se a classe é 'constante_string' e se o lexema está entre aspas duplas
+                System.out.println(t.getId());
+                if (t.getId() == 6) {
+                    String lexema = t.getLexeme();
+                    if (!(lexema.startsWith("\"") && lexema.endsWith("\""))) {
+                        throw new LexicalError(lexema + " Palavra reservada inválida");
+                    }
+                }
+
                 // Adiciona a mensagem formatada à lista
                 mensagens.add(String.format("%-5d %-20s %-15s\n", line, Constants.CLASSE_DESCRICAO[t.getId()], t.getLexeme()));
             }
@@ -181,6 +191,8 @@ public class Compiler extends JFrame {
                 // Caso contrário, exibe a mensagem de erro sem o caractere
 //                adicionarMensagem("Linha " + line + ": " + e.getMessage());
 //            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
