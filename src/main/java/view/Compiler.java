@@ -141,6 +141,7 @@ public class Compiler extends JFrame {
     private void acaoBotaoEquipe() {
         adicionarMensagem("Equipe: Nicolas Andrei Ceruti, Gustavo Henrique Campestrini, Julia Welter");
     }
+
     private void acaoBotaoCompilar() {
         Lexico lexico = new Lexico();
         lexico.setInput(editor.getText());
@@ -154,7 +155,7 @@ public class Compiler extends JFrame {
             mensagens.add("----------------------------------------\n");
 
             Token t = null;
-            while ( (t = lexico.nextToken()) != null ) {
+            while ((t = lexico.nextToken()) != null) {
                 // Calcula a linha com base na posição do token
                 int line = ScannerConstants.calculateLineFromPosition(t.getPosition(), editor.getText());
 
@@ -172,20 +173,17 @@ public class Compiler extends JFrame {
                 mensagens.add(String.format("%-5d %-20s %-15s\n", line, Constants.CLASSE_DESCRICAO[t.getId()], t.getLexeme()));
             }
 
-//            // Se o processo foi bem-sucedido, imprime todas as mensagens armazenadas
             for (String mensagem : mensagens) {
                 adicionarMensagem(mensagem);
             }
             adicionarMensagem("Programa compilado com sucesso!");
-        }
-        catch ( LexicalError e ) {  // tratamento de erros
+        } catch (LexicalError e) {
+
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
+            Character errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ?
+                    editor.getText().charAt(e.getPosition()) : null;
 
-            char errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ?
-                    editor.getText().charAt(e.getPosition()) : ' ';
-
-                adicionarMensagem("Linha " + line + ": " + errorChar +  " " + e.getMessage());
-
+            adicionarMensagem("Linha " + line + ": " + (errorChar != null ? errorChar : "") + " " + e.getMessage());
         }
     }
 
