@@ -182,17 +182,10 @@ public class Compiler extends JFrame {
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
 
             char errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ?
-                    editor.getText().charAt(e.getPosition()) : '?';
+                    editor.getText().charAt(e.getPosition()) : ' ';
 
-            // Se a mensagem de erro for "Símbolo inválido", inclui o caractere
-//            if (e.getMessage().contains("Símbolo inválido")) {
                 adicionarMensagem("Linha " + line + ": " + errorChar +  " " + e.getMessage());
-//            } else {
-                // Caso contrário, exibe a mensagem de erro sem o caractere
-//                adicionarMensagem("Linha " + line + ": " + e.getMessage());
-//            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
         }
     }
 
