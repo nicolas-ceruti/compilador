@@ -150,7 +150,7 @@ public class Compiler extends JFrame {
 
         try {
             // Armazena o cabeçalho da tabela na lista
-            mensagens.add(String.format("%-5s %-20s %-15s\n", "Linha", "Classe", "Lexema"));
+            mensagens.add(String.format("%-15s %-30s %-20s\n", "Linha", "Classe", "Lexema"));
             mensagens.add("----------------------------------------\n");
 
             Token t = null;
@@ -160,7 +160,6 @@ public class Compiler extends JFrame {
 
 
                 // Verifica se a classe é 'constante_string' e se o lexema está entre aspas duplas
-                System.out.println(t.getId());
                 if (t.getId() == 6) {
                     String lexema = t.getLexeme();
                     if (!(lexema.startsWith("\"") && lexema.endsWith("\""))) {
@@ -169,7 +168,7 @@ public class Compiler extends JFrame {
                 }
 
                 // Adiciona a mensagem formatada à lista
-                mensagens.add(String.format("%-5d %-20s %-15s\n", line, Constants.CLASSE_DESCRICAO[t.getId()], t.getLexeme()));
+                mensagens.add(String.format("%-15d %-30s %-20s\n", line, Constants.CLASSE_DESCRICAO[t.getId()], t.getLexeme()));
             }
 
 //            // Se o processo foi bem-sucedido, imprime todas as mensagens armazenadas
