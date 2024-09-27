@@ -164,7 +164,7 @@ public class Compiler extends JFrame {
                 if (t.getId() == 6) {
                     String lexema = t.getLexeme();
                     if (!(lexema.startsWith("\"") && lexema.endsWith("\""))) {
-                        throw new LexicalError(lexema + " Palavra reservada inválida");
+                        throw new LexicalError(lexema + " palavra reservada inválida");
                     }
                 }
 
@@ -179,9 +179,16 @@ public class Compiler extends JFrame {
         } catch (LexicalError e) {
 
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
-            Character errorChar = e.getPosition() >= 0 && e.getPosition() < editor.getText().length() ? editor.getText().charAt(e.getPosition()) : null;
 
-            adicionarMensagem("Linha " + line + ": " + (errorChar != null ? errorChar : "") + " " + e.getMessage());
+            String lexema = "";
+
+            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
+                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
+                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
+                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
+            }
+
+            adicionarMensagem("Linha " + line + ": " + lexema + " " + e.getMessage());
         }
     }
 

@@ -1260,10 +1260,10 @@ public interface ScannerConstants
 
     String[] SCANNER_ERROR =
     {
-        "Caractere não esperado",
+        "símbolo inválido",
         "",
         "",
-        "Erro identificando palavraaspas",
+        "constante_string inválida",
         "Erro identificando \"&&\"",
         "",
         "",
@@ -1291,7 +1291,7 @@ public interface ScannerConstants
         "Erro identificando decimal",
         "",
         "Comentário de bloco inválido ou não finalizado ",
-        "Identificador Inválido",
+        "identificador inválido",
         "",
         "",
         "Erro identificando <ignorar>",
