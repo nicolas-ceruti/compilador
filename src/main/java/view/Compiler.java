@@ -145,17 +145,7 @@ public class Compiler extends JFrame {
     private void acaoBotaoCompilar() {
 
 
-//            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
 //
-//            String lexema = "";
-//
-//            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
-//                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
-//                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
-//                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
-//            }
-//
-//            adicionarMensagem("Linha " + line + ": " + lexema + " " + e.getMessage());
 
 
 
@@ -176,7 +166,17 @@ public class Compiler extends JFrame {
         }
         catch ( LexicalError e )
         {
-            //Trata erros léxicos, conforme especificação da parte 2 - do compilador
+            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
+            String lexema = "";
+
+            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
+                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
+                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
+                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
+            }
+
+            adicionarMensagem("Linha " + line + ": " + lexema + " " + e.getMessage());
+
         }
         catch ( SyntaticError e )
         {
