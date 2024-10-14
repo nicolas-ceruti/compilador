@@ -15,11 +15,6 @@ public class AnalysisError extends Exception
         super(msg);
         this.position = -1;
     }
-//
-//    public AnalysisError(String msg, int position) {
-//        super(msg);
-//        this.position = -1;
-//    }
 
     public String getLexema() {
         return lexema;

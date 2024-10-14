@@ -1304,7 +1304,7 @@ public interface ScannerConstants
                     "",
                     ""
             };
-    
+
     public static int calculateLineFromPosition(int position, String text) {
         int line = 1;
         for (int i = 0; i < position; i++) {
