@@ -143,54 +143,60 @@ public class Compiler extends JFrame {
     }
 
     private void acaoBotaoCompilar() {
+
+
+//            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
+//
+//            String lexema = "";
+//
+//            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
+//                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
+//                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
+//                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
+//            }
+//
+//            adicionarMensagem("Linha " + line + ": " + lexema + " " + e.getMessage());
+
+
+
+
         Lexico lexico = new Lexico();
+        Sintatico sintatico = new Sintatico();
+        Semantico semantico = new Semantico();
+
         lexico.setInput(editor.getText());
 
         // Lista para armazenar as mensagens
         List<String> mensagens = new ArrayList<>();
 
-        try {
-            // Armazena o cabeçalho da tabela na lista
-            mensagens.add(String.format("%-15s %-30s %-20s\n", "Linha", "Classe", "Lexema"));
-            mensagens.add("----------------------------------------\n");
-
-            Token t = null;
-            while ((t = lexico.nextToken()) != null) {
-                // Calcula a linha com base na posição do token
-                int line = ScannerConstants.calculateLineFromPosition(t.getPosition(), editor.getText());
-
-
-                // Verifica se a classe é 'constante_string' e se o lexema está entre aspas duplas
-                if (t.getId() == 6) {
-                    String lexema = t.getLexeme();
-                    if (!(lexema.startsWith("\"") && lexema.endsWith("\""))) {
-                        throw new LexicalError(lexema + " palavra reservada inválida");
-                    }
-                }
-
-                // Adiciona a mensagem formatada à lista
-                mensagens.add(String.format("%-15d %-30s %-20s\n", line, Constants.CLASSE_DESCRICAO[t.getId()], t.getLexeme()));
-            }
-
-            for (String mensagem : mensagens) {
-                adicionarMensagem(mensagem);
-            }
+        try
+        {
+            sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
             adicionarMensagem("Programa compilado com sucesso!");
-        } catch (LexicalError e) {
-
-            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
-
-            String lexema = "";
-
-            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
-                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
-                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
-                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
-            }
-
-            adicionarMensagem("Linha " + line + ": " + lexema + " " + e.getMessage());
         }
+        catch ( LexicalError e )
+        {
+            //Trata erros léxicos, conforme especificação da parte 2 - do compilador
+        }
+        catch ( SyntaticError e )
+        {
+            System.out.println(e.getPosition() + " símbolo encontrado: na entrada " + e.getMessage());
+
+            //Trata erros sintáticos
+            //linha 			      sugestão: converter getPosition em linha
+            //símbolo encontrado    sugestão: implementar um método getToken no sintatico
+            //símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR
+            // consultar os símbolos esperados no GALS (em Documentação > Tabela de Análise Sintática):
+        }
+        catch ( SemanticError e )
+        {
+            //Trata erros semânticos
+        }
+
+
+
     }
+
 
 
     private void acaoBotaoNovo() {

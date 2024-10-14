@@ -40,7 +40,7 @@ public class Sintatico implements Constants
             currentToken = new Token(DOLLAR, "$", pos);
         }
 
-        int x = ((Integer)stack.pop()).intValue();
+        int x = Integer.getInteger((String)stack.pop());
         int a = currentToken.getId();
 
         if (x == EPSILON)
