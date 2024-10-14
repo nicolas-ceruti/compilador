@@ -5,7 +5,8 @@ public class SemanticError extends AnalysisError {
         super(msg, position, lexema);
     }
 
-    public SemanticError(String msg) {
+    public SemanticError(String msg)
+    {
         super(msg);
     }
 }

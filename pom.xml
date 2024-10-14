@@ -29,7 +29,7 @@
                     <archive>
                         <manifest>
                             <!-- Classe principal que contém o método main -->
-                            <mainClass>view.Compiler.Compiler</mainClass>
+                            <mainClass>view.Compiler</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
