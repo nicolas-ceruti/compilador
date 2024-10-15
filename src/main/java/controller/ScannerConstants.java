@@ -1260,7 +1260,7 @@ public interface ScannerConstants
 
     String[] SCANNER_ERROR =
             {
-                    "Símbolo inválido",
+                    "símbolo inválido",
                     "",
                     "",
                     "Constante string inválida",
@@ -1291,7 +1291,7 @@ public interface ScannerConstants
                     "Erro identificando decimal",
                     "",
                     "Comentário de bloco inválido ou não finalizado ",
-                    "Identificador Inválido",
+                    "identificador inválido",
                     "",
                     "",
                     "Erro identificando <ignorar>",

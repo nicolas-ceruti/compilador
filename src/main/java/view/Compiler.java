@@ -182,13 +182,7 @@ public class Compiler extends JFrame {
         catch ( SyntaticError e )
         {
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
-            String lexema = "";
-
-            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
-                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
-                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
-                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
-            }
+            String lexema = e.getLexema();
 
             String message = StringFormatter.format(e.getMessage(), line, lexema).getValue();
 
