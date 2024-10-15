@@ -1,6 +1,7 @@
 package view;
 
 
+import com.sun.javafx.binding.StringFormatter;
 import controller.*;
 
 import javax.swing.*;
@@ -180,13 +181,18 @@ public class Compiler extends JFrame {
         }
         catch ( SyntaticError e )
         {
-            System.out.println(e.getPosition() + " símbolo encontrado: na entrada " + e.getMessage());
+            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
+            String lexema = "";
 
-            //Trata erros sintáticos
-            //linha 			      sugestão: converter getPosition em linha
-            //símbolo encontrado    sugestão: implementar um método getToken no sintatico
-            //símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR
-            // consultar os símbolos esperados no GALS (em Documentação > Tabela de Análise Sintática):
+            if (e.getMessage().toLowerCase().contains("símbolo inválido") //
+                    || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
+                    || e.getMessage().toLowerCase().contains("identificador inválido")) {
+                lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
+            }
+
+            String message = StringFormatter.format(e.getMessage(), line, lexema).getValue();
+
+            adicionarMensagem(message);
         }
         catch ( SemanticError e )
         {
