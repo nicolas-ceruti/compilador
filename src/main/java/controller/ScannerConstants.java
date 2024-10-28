@@ -1263,7 +1263,7 @@ public interface ScannerConstants
                     "símbolo inválido",
                     "",
                     "",
-                    "Constante string inválida",
+                    "constante_string inválida",
                     "Erro identificando \"&&\"",
                     "",
                     "",

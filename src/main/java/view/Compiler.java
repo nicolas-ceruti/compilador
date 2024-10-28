@@ -163,7 +163,7 @@ public class Compiler extends JFrame {
         try
         {
             sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
-            adicionarMensagem("Programa compilado com sucesso!");
+            adicionarMensagem("Programa compilado com sucesso");
         }
         catch ( LexicalError e )
         {
@@ -176,7 +176,7 @@ public class Compiler extends JFrame {
                 lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
             }
 
-            adicionarMensagem("Erro na linha " + line + ": " + lexema + " " + e.getMessage());
+            adicionarMensagem("Erro na linha " + line + " - " + lexema + " " + e.getMessage());
 
         }
         catch ( SyntaticError e )

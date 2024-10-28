@@ -62,7 +62,7 @@ public class Sintatico implements Constants
             }
             else
             {
-                if(currentToken.getId() == 5 || currentToken.getId() == 1){
+                if(currentToken.getId() == t_palavraaspas || currentToken.getId() == DOLLAR){
                     throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), Constants.CLASSE_DESCRICAO[currentToken.getId()]);
                 }else{
                     throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), currentToken.getLexeme());
