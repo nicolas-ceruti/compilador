@@ -176,7 +176,7 @@ public class Compiler extends JFrame {
                 lexema = e.getLexema() != null ? e.getLexema().replaceAll("\n", "") : "";
             }
 
-            adicionarMensagem("Linha " + line + ": " + lexema + " " + e.getMessage());
+            adicionarMensagem("Erro na linha " + line + ": " + lexema + " " + e.getMessage());
 
         }
         catch ( SyntaticError e )
