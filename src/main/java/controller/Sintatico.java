@@ -62,7 +62,11 @@ public class Sintatico implements Constants
             }
             else
             {
-                throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), Constants.CLASSE_DESCRICAO[currentToken.getId()]);
+                if(currentToken.getId() == 5 || currentToken.getId() == 1){
+                    throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), Constants.CLASSE_DESCRICAO[currentToken.getId()]);
+                }else{
+                    throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), currentToken.getLexeme());
+                }
             }
         }
         else if (isNonTerminal(x))
@@ -70,8 +74,11 @@ public class Sintatico implements Constants
             if (pushProduction(x, a))
                 return false;
             else
+            if(currentToken.getId() == 5 || currentToken.getId() == 1){
                 throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), Constants.CLASSE_DESCRICAO[currentToken.getId()]);
-        }
+            }else{
+                throw new SyntaticError(PARSER_ERROR[x], currentToken.getPosition(), currentToken.getLexeme());
+            }        }
         else // isSemanticAction(x)
         {
             semanticAnalyser.executeAction(x-FIRST_SEMANTIC_ACTION, previousToken);
