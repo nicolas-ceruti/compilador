@@ -42,7 +42,7 @@ public interface Constants extends ScannerConstants, ParserConstants
 
     static final String[] CLASSE_DESCRICAO = {
             "desconhecida", // Para EPSILON (0)
-            "simbolo especial",       // Para DOLLAR (1)
+            "EOF",       // Para DOLLAR (1)
             "identificador", // Para t_identificadora (2)
             "constante_int",    // Para t_qualquer (3)
             "constante_float",     // Para t_decimal (4)
