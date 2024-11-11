@@ -149,8 +149,6 @@ public class Compiler extends JFrame {
 //
 
 
-
-
         Lexico lexico = new Lexico();
         Sintatico sintatico = new Sintatico();
         Semantico semantico = new Semantico();
@@ -160,13 +158,10 @@ public class Compiler extends JFrame {
         // Lista para armazenar as mensagens
         List<String> mensagens = new ArrayList<>();
 
-        try
-        {
+        try {
             sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
             adicionarMensagem("Programa compilado com sucesso");
-        }
-        catch ( LexicalError e )
-        {
+        } catch (LexicalError e) {
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
             String lexema = "";
 
@@ -178,25 +173,19 @@ public class Compiler extends JFrame {
 
             adicionarMensagem("Erro na linha " + line + " - " + lexema + " " + e.getMessage());
 
-        }
-        catch ( SyntaticError e )
-        {
+        } catch (SyntaticError e) {
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
             String lexema = e.getLexema();
 
             String message = StringFormatter.format(e.getMessage(), line, lexema).getValue();
 
             adicionarMensagem(message);
-        }
-        catch ( SemanticError e )
-        {
+        } catch (SemanticError e) {
             //Trata erros semânticos
         }
 
 
-
     }
-
 
 
     private void acaoBotaoNovo() {
