@@ -164,7 +164,6 @@ public class Compiler extends JFrame {
         } catch (LexicalError e) {
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
             String lexema = "";
-
             if (e.getMessage().toLowerCase().contains("símbolo inválido") //
                     || e.getMessage().toLowerCase().contains("palavra reservada inválida")//
                     || e.getMessage().toLowerCase().contains("identificador inválido")) {
