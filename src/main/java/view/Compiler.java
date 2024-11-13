@@ -182,10 +182,7 @@ public class Compiler extends JFrame {
         } catch (SemanticError e) {
             //Trata erros semânticos
         }
-
-
     }
-
 
     private void acaoBotaoNovo() {
         clearAll();
