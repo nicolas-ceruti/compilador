@@ -37,6 +37,10 @@ public class Sintatico implements Constants {
         int x = Integer.parseInt((String) stack.pop());
         int a = currentToken.getId();
 
+        System.out.println(x);
+        System.out.println(isTerminal(x));
+        System.out.println(isNonTerminal(x));
+
         if (x == EPSILON) {
             return false;
         } else if (isTerminal(x)) {

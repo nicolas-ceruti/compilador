@@ -94,6 +94,7 @@ public class Lexico implements Constants
                 end = half-1;
         }
 
+
         return -1;
     }
 

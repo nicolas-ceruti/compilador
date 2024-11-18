@@ -145,23 +145,33 @@ public class Compiler extends JFrame {
 
     private void acaoBotaoCompilar() {
 
-
-//
-
-
         Lexico lexico = new Lexico();
         Sintatico sintatico = new Sintatico();
         Semantico semantico = new Semantico();
 
         lexico.setInput(editor.getText());
 
-        // Lista para armazenar as mensagens
-        List<String> mensagens = new ArrayList<>();
-
         try {
-            sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
-            adicionarMensagem("Programa compilado com sucesso");
+            Token t;
+            while ((t = lexico.nextToken()) != null) {
+                int line = ScannerConstants.calculateLineFromPosition(t.getPosition(),  editor.getText());
+
+                if (t.getId() == 6) {
+                    String lexema = t.getLexeme();
+
+                    if (!(lexema.startsWith("\"") && lexema.endsWith("\""))) {
+                        throw new LexicalError(lexema + " palavra reservada inválida" , line);
+                    }
+                }
+            }
+
+            lexico.setInput(editor.getText());
+            sintatico.parse(lexico, semantico);
+
+            adicionarMensagem("Programa compilado com sucesso!");
+
         } catch (LexicalError e) {
+            System.out.println(e.getPosition());
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
             String lexema = "";
             if (e.getMessage().toLowerCase().contains("símbolo inválido") //
