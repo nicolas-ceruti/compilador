@@ -27,6 +27,10 @@ public class Lexico implements Constants
         position = pos;
     }
 
+    public String getInput() {
+        return input;
+    }
+
     public Token nextToken() throws LexicalError
     {
         if ( ! hasInput() )
@@ -56,7 +60,6 @@ public class Lexico implements Constants
                 }
             }
         }
-
 
         if (endState < 0 || (endState != state && tokenForState(lastState) == -2)){
             String lexeme = input.substring(start, position);

@@ -23,6 +23,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static controller.ScannerConstants.SPECIAL_CASES_KEYS;
+
 public class Compiler extends JFrame {
     private JLabel labelLinhas;
     private JTextArea editor;
@@ -154,14 +156,8 @@ public class Compiler extends JFrame {
         try {
             Token t;
             while ((t = lexico.nextToken()) != null) {
-                int line = ScannerConstants.calculateLineFromPosition(t.getPosition(),  editor.getText());
-
-                if (t.getId() == 6) {
-                    String lexema = t.getLexeme();
-
-                    if (!(lexema.startsWith("\"") && lexema.endsWith("\""))) {
-                        throw new LexicalError(lexema + " palavra reservada inválida" , line);
-                    }
+                if (t.getId() == 6 && ScannerConstants.verifWord(t.getLexeme())) {
+                        throw new LexicalError(t.getLexeme() + " palavra reservada inválida" , t.getPosition());
                 }
             }
 

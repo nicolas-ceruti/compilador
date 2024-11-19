@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public interface ScannerConstants {
     int[] SCANNER_TABLE_INDEXES =
             {
@@ -1312,6 +1315,21 @@ public interface ScannerConstants {
             }
         }
         return line;
+    }
+
+    public static boolean verifWord(String lexema) {
+
+        Set<String> specialCasesSet = new HashSet<>();
+        for (String key : SPECIAL_CASES_KEYS) {
+            specialCasesSet.add(key);
+        }
+
+        // Verificar se o lexema está no conjunto
+        if (specialCasesSet.contains(lexema)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
