@@ -14,7 +14,6 @@ public class Semantico implements Constants {
     private ArrayList<Token> lista_identificadores = new ArrayList<>();
     private HashMap<String, Simbolo> lista_simbolos = new HashMap<>();
 
-
     private int rotulo = 0;
 
     public void executeAction(int action, Token token) throws SemanticError {
@@ -109,6 +108,12 @@ public class Semantico implements Constants {
             case 109:
                 acao109(token);
                 break;
+            case 111:
+                acao111(token);
+                break;
+            case 112:
+                acao112(token);
+                break;
         }
     }
 
@@ -166,7 +171,7 @@ public class Semantico implements Constants {
 
     public void acao106(Token token) {
         codigo_objeto += "ldstr " + token.getLexeme() + "\n";
-        this.print("string");
+        this.write("string");
     }
 
     public void acao108() {
@@ -174,7 +179,7 @@ public class Semantico implements Constants {
         if (tipo.equals("int64")) {
             codigo_objeto += "conv.i8\n";
         }
-        this.print(tipo);
+        this.write(tipo);
     }
 
     public void acao110() {
@@ -191,12 +196,13 @@ public class Semantico implements Constants {
     public void acao113() {
         String novoRotulo = this.criarNovoRotulo();
         codigo_objeto += novoRotulo + ":\n";
-        pilha_rotulos.push(novoRotulo);
     }
 
     public String criarNovoRotulo() {
         rotulo++;
-        return "novo_rotulo" + rotulo;
+        String novoRotulo = "novo_rotulo" + rotulo;
+        pilha_rotulos.push(novoRotulo);
+        return novoRotulo;
     }
 
     public void acao114(Token token) throws SemanticError {
@@ -237,21 +243,32 @@ public class Semantico implements Constants {
         }
     }
 
-    public void acao109(Token token) throws SemanticError {
+    public void acao109(Token token)  {
         String novoRotulo = this.criarNovoRotulo();
-        pilha_rotulos.push(novoRotulo);
         String novoRotulo2 = this.criarNovoRotulo();
 
         if (pilha_tipos.pop().equals("bool")) {
             codigo_objeto += "brfalse " + novoRotulo2;
         }
-        pilha_rotulos.push(novoRotulo2);
+
     }
 
+    public void acao112(Token token)  {
+        String novoRotulo = this.criarNovoRotulo();
 
+        if (pilha_tipos.pop().equals("bool")) {
+            codigo_objeto += "brfalse " + novoRotulo;
+        }
+
+    }
+
+    public void acao111(Token token) {
+        String rotulo_desempilhado = pilha_rotulos.pop();
+        codigo_objeto += rotulo_desempilhado + ":";
+    }
 
     public void acao123() {
-        tabelaTipos();
+        empilharTipoResultadoOperacao();
         codigo_objeto += "add\n";
     }
 
@@ -282,12 +299,12 @@ public class Semantico implements Constants {
     }
 
     public void acao125() {
-        tabelaTipos();
+        empilharTipoResultadoOperacao();
         codigo_objeto += "mul\n";
     }
 
     public void acao126() {
-        tabelaTipos();
+        empilharTipoResultadoOperacao();
         codigo_objeto += "div\n";
     }
 
@@ -321,19 +338,18 @@ public class Semantico implements Constants {
     public void acao127(Token token) throws SemanticError {
         if (this.lista_simbolos.containsKey(token.getLexeme())) {
             Simbolo simbolo = this.lista_simbolos.get(token.getLexeme());
-            if (!simbolo.isConstante()) {
-                this.adicionaVariavelPilha(token, simbolo);
-            } else {
-                this.adicionaConstantePilha(simbolo);
+            pilha_tipos.push(simbolo.getTipo());
+            codigo_objeto += "ldloc " + token.getLexeme() + "\n";
+            if (simbolo.getTipo().equals("int64")) {
+                codigo_objeto += "conv.r8\n";
             }
-            return;
         }
         throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
     }
 
 
     public void acao124() {
-        tabelaTipos();
+        empilharTipoResultadoOperacao();
         codigo_objeto += "sub\n";
     }
 
@@ -345,7 +361,6 @@ public class Semantico implements Constants {
             }
 
             Simbolo simbolo = this.createSimbolo(t, token);
-            simbolo.setConstante(false);
             lista_simbolos.put(t.getLexeme(), simbolo);
             codigo_objeto += ".locals (" + simbolo.getTipo() + " " + simbolo.getIdentificador() + ")\n";
         }
@@ -365,14 +380,12 @@ public class Semantico implements Constants {
         }
         simbolo.setValor(token2.getLexeme());
         simbolo.setIdentificador(token1.getLexeme());
-        simbolo.setConstante(true);
         return simbolo;
     }
 
-    public void tabelaTipos() {
+    public void empilharTipoResultadoOperacao() {
         String operador2 = pilha_tipos.pop();
         String operador1 = pilha_tipos.pop();
-
 
         if (operador1.equals("float64") || operador2.equals("float64")) {
             pilha_tipos.push("float64");
@@ -381,25 +394,8 @@ public class Semantico implements Constants {
         pilha_tipos.push("int64");
     }
 
-    public void print(String tipo) {
+    public void write(String tipo) {
         codigo_objeto += "call void [mscorlib]System.Console::Write(" + tipo + ")\n";
-    }
-
-    public void adicionaConstantePilha(Simbolo simbolo) {
-        switch (simbolo.getTipo()) {
-            case "int64":
-                adicionaInt64(simbolo.getValor());
-                break;
-            case "float64":
-                adicionaFloat64(simbolo.getValor());
-                break;
-            case "string":
-                adicionaString(simbolo.getValor());
-                break;
-            case "bool":
-                adicionaBool(simbolo.getValor());
-                break;
-        }
     }
 
     public void adicionaInt64(String valor) {
@@ -421,14 +417,5 @@ public class Semantico implements Constants {
         codigo_objeto += "ldc.i4." + valor + "\n";
         pilha_tipos.push("bool");
     }
-
-    public void adicionaVariavelPilha(Token token, Simbolo simbolo) {
-        codigo_objeto += "ldloc " + token.getLexeme() + "\n";
-        if (simbolo.getTipo().equals("int64")) {
-            codigo_objeto += "conv.r8\n";
-        }
-        pilha_tipos.push(simbolo.getTipo());
-    }
-
 
 }

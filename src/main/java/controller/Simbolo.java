@@ -5,15 +5,13 @@ public class Simbolo {
         private String identificador;
         private String tipo;
         private String valor;
-        private boolean constante;
 
         public Simbolo() {}
 
-        public Simbolo(String identificador, String tipo, String valor, boolean constante) {
+        public Simbolo(String identificador, String tipo, String valor) {
             this.identificador = identificador;
             this.tipo = tipo;
             this.valor = valor;
-            this.constante = constante;
         }
 
         public String getIdentificador() {
@@ -40,12 +38,5 @@ public class Simbolo {
             this.valor = valor;
         }
 
-        public boolean isConstante() {
-            return constante;
-        }
-
-        public void setConstante(boolean constate) {
-            this.constante = constate;
-        }
 
 }
