@@ -14,7 +14,8 @@ public class Semantico implements Constants {
     private ArrayList<Token> lista_identificadores = new ArrayList<>();
     private HashMap<String, Simbolo> lista_simbolos = new HashMap<>();
 
-    int rotulo = 0;
+
+    private int rotulo = 0;
 
     public void executeAction(int action, Token token) throws SemanticError {
         switch (action) {
@@ -35,6 +36,15 @@ public class Semantico implements Constants {
                 break;
             case 108:
                 acao108();
+                break;
+            case 113:
+                acao113();
+                break;
+            case 114:
+                acao114(token);
+                break;
+            case 115:
+                acao115();
                 break;
             case 121:
                 acao121(token);
@@ -100,12 +110,7 @@ public class Semantico implements Constants {
     }
 
     public void acao100() {
-        codigo_objeto += ".assembly extern mscorlib {}\n" +
-                ".assembly _exemplo{}\n" +
-                ".module _exemplo.exe\n" +
-                ".class public _exemplo{\n" +
-                ".method static public void _principal(){\n" +
-                ".entrypoint\n";
+        codigo_objeto += ".assembly extern mscorlib {}\n" + ".assembly _exemplo{}\n" + ".module _exemplo.exe\n" + ".class public _exemplo{\n" + ".method static public void _principal(){\n" + ".entrypoint\n";
     }
 
     public void acao101() {
@@ -169,6 +174,30 @@ public class Semantico implements Constants {
         this.print(tipo);
     }
 
+    public void acao113() {
+        String novoRotulo = this.criarNovoRotulo();
+        codigo_objeto += novoRotulo + ":\n";
+        pilha_rotulos.push(novoRotulo);
+    }
+
+    public String criarNovoRotulo() {
+        rotulo++;
+        return "novo_rotulo" + rotulo;
+    }
+
+    public void acao114(Token token) throws SemanticError {
+        if (!pilha_tipos.pop().equals("bool")) {
+            throw new SemanticError("expressao incompativel em comando de repeticao", token.getPosition(), token.getLexeme());
+        }
+        codigo_objeto += "brtrue " + pilha_rotulos.pop() + "\n";
+    }
+
+    public void acao115() {
+        pilha_rotulos.pop();
+
+        codigo_objeto += "brfalse " + pilha_rotulos.pop() + "\n";
+    }
+
     public void acao121(Token token) {
         operador_relacional = token.getLexeme();
     }
@@ -204,11 +233,7 @@ public class Semantico implements Constants {
 
     }
 
-    public String criarNovoRotulo() {
-        rotulo++;
-        String novoRotulo = "novo_rotulo" + rotulo;
-        return novoRotulo;
-    }
+
 
     public void acao123() {
         tabelaTipos();
@@ -328,7 +353,6 @@ public class Semantico implements Constants {
         simbolo.setConstante(true);
         return simbolo;
     }
-
 
 
     public void tabelaTipos() {
