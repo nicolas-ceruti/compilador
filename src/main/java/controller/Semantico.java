@@ -224,9 +224,8 @@ public class Semantico implements Constants {
     }
 
     public void acao115() {
-        pilha_rotulos.pop();
-
-        codigo_objeto += "brfalse " + pilha_rotulos.pop() + "\n";
+        String rotulo_desempilhado = pilha_rotulos.pop();
+        codigo_objeto += "brfalse " + rotulo_desempilhado + "\n";
     }
 
     public void acao121(Token token) {
