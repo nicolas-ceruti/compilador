@@ -218,6 +218,37 @@ public class Semantico implements Constants {
     }
 
 
+    public void acao102(Token token) throws SemanticError {
+        for (Token t : this.lista_identificadores) {
+            if (lista_simbolos.containsKey(t.getLexeme())) {
+                throw new SemanticError(token.getLexeme() + " ja declarado", token.getPosition(), token.getLexeme());
+            }
+
+            Simbolo simbolo = this.createSimbolo(t, token);
+            simbolo.setConstante(false);
+            lista_simbolos.put(t.getLexeme(), simbolo);
+            codigo_objeto += ".locals (" + simbolo.getTipo() + " " + simbolo.getIdentificador() + ")\n";
+        }
+        this.lista_identificadores.clear();
+    }
+
+    public Simbolo createSimbolo(Token token1, Token token2) {
+        Simbolo simbolo = new Simbolo();
+        if (token1.getLexeme().startsWith("i_")) {
+            simbolo.setTipo("int64");
+        } else if (token1.getLexeme().startsWith("f_")) {
+            simbolo.setTipo("float64");
+        } else if (token1.getLexeme().startsWith("s_")) {
+            simbolo.setTipo("string");
+        } else {
+            simbolo.setTipo("bool");
+        }
+        simbolo.setValor(token2.getLexeme());
+        simbolo.setIdentificador(token1.getLexeme());
+        simbolo.setConstante(true);
+        return simbolo;
+    }
+
 
     public void tabelaTipos() {
         String operador2 = pilha_tipos.pop();

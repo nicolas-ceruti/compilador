@@ -2,7 +2,7 @@ package controller;
 
 public class Simbolo {
 
-        private String identifidor;
+        private String identificador;
         private String tipo;
         private String valor;
         private boolean constante;
@@ -10,18 +10,18 @@ public class Simbolo {
         public Simbolo() {}
 
         public Simbolo(String identificador, String tipo, String valor, boolean constante) {
-            this.identifidor = identificador;
+            this.identificador = identificador;
             this.tipo = tipo;
             this.valor = valor;
             this.constante = constante;
         }
 
-        public String getIdentifidor() {
-            return identifidor;
+        public String getIdentificador() {
+            return identificador;
         }
 
-        public void setIdentifidor(String identifidor) {
-            this.identifidor = identifidor;
+        public void setIdentificador(String identifidor) {
+            this.identificador = identifidor;
         }
 
         public String getTipo() {
