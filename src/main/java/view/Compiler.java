@@ -163,8 +163,23 @@ public class Compiler extends JFrame {
 
             lexico.setInput(editor.getText());
             sintatico.parse(lexico, semantico);
-            System.out.println(Semantico.codigo_objeto);
+
             adicionarMensagem("Programa compilado com sucesso!");
+
+
+            String fileName = "codigo_objeto.il";
+
+            File file = new File(fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+
+            try (FileWriter fileWriter = new FileWriter(fileName)) {
+                fileWriter.write(Semantico.codigo_objeto);
+                adicionarMensagem("Arquivo salvo como " + fileName);
+            } catch (IOException ioException) {
+                adicionarMensagem("Erro ao salvar o arquivo: " + ioException.getMessage());
+            }
 
         } catch (LexicalError e) {
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
@@ -185,8 +200,8 @@ public class Compiler extends JFrame {
 
             adicionarMensagem(message);
         } catch (SemanticError e) {
-            //Trata erros semânticos
-            System.out.println("Erro Semantico" + e.toString());
+            int line =  ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
+            adicionarMensagem("Erro na linha " + line + " - " + e.getMessage());
         }
     }
 
