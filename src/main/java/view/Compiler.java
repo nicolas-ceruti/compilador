@@ -163,11 +163,10 @@ public class Compiler extends JFrame {
 
             lexico.setInput(editor.getText());
             sintatico.parse(lexico, semantico);
-
+            System.out.println(Semantico.codigo_objeto);
             adicionarMensagem("Programa compilado com sucesso!");
 
         } catch (LexicalError e) {
-            System.out.println(e.getPosition());
             int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
             String lexema = "";
             if (e.getMessage().toLowerCase().contains("símbolo inválido") //
