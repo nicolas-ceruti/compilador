@@ -197,11 +197,9 @@ public class Semantico implements Constants {
         String rotulo_desempilhado2 = pilha_rotulos.pop();
         String rotulo_desempilhado1 = pilha_rotulos.pop();
 
-        codigo_objeto += "br " + rotulo_desempilhado1;
-
+        codigo_objeto += "br " + rotulo_desempilhado1 + " \n";
         pilha_rotulos.push(rotulo_desempilhado1);
-
-        codigo_objeto += rotulo_desempilhado2 + ":";
+        codigo_objeto += rotulo_desempilhado2 + ":\n";
     }
 
     public void acao113() {
@@ -258,7 +256,7 @@ public class Semantico implements Constants {
         String novoRotulo2 = this.criarNovoRotulo();
 
         if (pilha_tipos.pop().equals("bool")) {
-            codigo_objeto += "brfalse " + novoRotulo2;
+            codigo_objeto += "brfalse " + novoRotulo2 + "\n";
         }
 
     }
@@ -267,14 +265,14 @@ public class Semantico implements Constants {
         String novoRotulo = this.criarNovoRotulo();
 
         if (pilha_tipos.pop().equals("bool")) {
-            codigo_objeto += "brfalse " + novoRotulo;
+            codigo_objeto += "brfalse " + novoRotulo + "\n";
         }
 
     }
 
     public void acao111(Token token) {
         String rotulo_desempilhado = pilha_rotulos.pop();
-        codigo_objeto += rotulo_desempilhado + ":";
+        codigo_objeto += rotulo_desempilhado + ":\n";
     }
 
     public void acao123() {
