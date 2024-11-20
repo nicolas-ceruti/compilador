@@ -33,7 +33,7 @@ public class Semantico implements Constants
                 acao128(token);
                 break;
             case 129:
-                acao128(token);
+                acao129(token);
                 break;
         }
     }
