@@ -36,6 +36,9 @@ public class Semantico implements Constants {
             case 108:
                 acao108();
                 break;
+            case 110:
+                acao110();
+                break;
             case 113:
                 acao113();
                 break;
@@ -165,6 +168,17 @@ public class Semantico implements Constants {
             codigo_objeto += "conv.i8\n";
         }
         this.print(tipo);
+    }
+
+    public void acao110() {
+        String rotulo_desempilhado2 = pilha_rotulos.pop();
+        String rotulo_desempilhado1 = pilha_rotulos.pop();
+
+        codigo_objeto += "br " + rotulo_desempilhado1;
+
+        pilha_rotulos.push(rotulo_desempilhado1);
+
+        codigo_objeto += rotulo_desempilhado2 + ":";
     }
 
     public void acao113() {
@@ -335,7 +349,6 @@ public class Semantico implements Constants {
         return simbolo;
     }
 
-
     public void tabelaTipos() {
         String operador2 = pilha_tipos.pop();
         String operador1 = pilha_tipos.pop();
@@ -351,7 +364,6 @@ public class Semantico implements Constants {
     public void print(String tipo) {
         codigo_objeto += "call void [mscorlib]System.Console::Write(" + tipo + ")\n";
     }
-
 
     public void adicionaConstantePilha(Simbolo simbolo) {
         switch (simbolo.getTipo()) {
