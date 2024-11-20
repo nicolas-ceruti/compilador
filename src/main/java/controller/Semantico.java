@@ -32,6 +32,9 @@ public class Semantico implements Constants
             case 128:
                 acao128(token);
                 break;
+            case 129:
+                acao128(token);
+                break;
         }
     }
 
@@ -67,6 +70,10 @@ public class Semantico implements Constants
 
     public void acao128(Token token) {
         adicionaInt64(token.getLexeme());
+    }
+
+    public void acao129(Token token) {
+        adicionaFloat64(token.getLexeme());
     }
 
     public void tabelaTipos() {
