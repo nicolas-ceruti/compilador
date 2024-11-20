@@ -228,9 +228,10 @@ public class Semantico implements Constants {
         pilha_rotulos.push(novoRotulo);
         String novoRotulo2 = this.criarNovoRotulo();
 
+        if (pilha_tipos.pop().equals("bool")) {
+            codigo_objeto += "brfalse " + novoRotulo2;
+        }
         pilha_rotulos.push(novoRotulo2);
-
-
     }
 
 
