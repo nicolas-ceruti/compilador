@@ -22,6 +22,15 @@ public class Semantico implements Constants {
             case 101:
                 acao101();
                 break;
+            case 103:
+                acao103();
+                break;
+            case 105:
+                acao105();
+                break;
+            case 106:
+                acao106(token);
+                break;
             case 108:
                 acao108();
                 break;
@@ -92,11 +101,57 @@ public class Semantico implements Constants {
     }
 
     public void acao101() {
-        codigo_objeto += "ret\n" +
-                "}\n" +
-                "}\n";
+        codigo_objeto += "ret\n" + "}\n" + "}\n";
     }
 
+    public void acao103() throws SemanticError {
+        String tipo = this.pilha_tipos.pop();
+        for (int i = 0; i < this.lista_identificadores.size() - 1; i++) {
+            codigo_objeto += "dup\n";
+        }
+
+        for (Token t : this.lista_identificadores) {
+            if (!lista_simbolos.containsKey(t.getLexeme())) {
+                throw new SemanticError(t.getLexeme() + " nao declarado", t.getPosition(), t.getLexeme());
+            }
+            if (tipo.equals("int64")) {
+                codigo_objeto += "conv.i8\n";
+            }
+            codigo_objeto += "stloc " + t.getLexeme() + "\n";
+        }
+        this.lista_identificadores.clear();
+    }
+
+    public void acao105() throws SemanticError {
+        for (Token t : this.lista_identificadores) {
+            if (!lista_simbolos.containsKey(t.getLexeme())) {
+                throw new SemanticError(t.getLexeme() + " nao declarado", t.getPosition(), t.getLexeme());
+            }
+            this.input(lista_simbolos.get(t.getLexeme()));
+            codigo_objeto += "stloc " + t.getLexeme() + "\n";
+        }
+        this.lista_identificadores.clear();
+    }
+
+    public void input(Simbolo simbolo) {
+        codigo_objeto += "call string [mscorlib]System.Console::ReadLine()\n";
+        if (!simbolo.getTipo().equals("string")) {
+            codigo_objeto += "call " + simbolo.getTipo() + " [mscorlib]System." + this.getClasse(simbolo.getTipo()) + "::Parse(string)\n";
+        }
+    }
+
+    public String getClasse(String tipo) {
+        return switch (tipo) {
+            case "int64" -> "Int64";
+            case "bool" -> "Boolean";
+            default -> "Double";
+        };
+    }
+
+    public void acao106(Token token) {
+        codigo_objeto += "ldstr " + token.getLexeme() + "\n";
+        this.print("string");
+    }
 
     public void acao108() {
         String tipo = pilha_tipos.pop();
@@ -200,8 +255,8 @@ public class Semantico implements Constants {
 
 
     public void acao127(Token token) throws SemanticError {
-        if (this.pilha_rotulos.containsKey(token.getLexeme())) {
-            Simbolo simbolo = this.pilha_rotulos.get(token.getLexeme());
+        if (this.lista_simbolos.containsKey(token.getLexeme())) {
+            Simbolo simbolo = this.lista_simbolos.get(token.getLexeme());
             if (!simbolo.isConstante()) {
                 this.adicionaVariavelPilha(token, simbolo);
             } else {
@@ -211,6 +266,7 @@ public class Semantico implements Constants {
         }
         throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
     }
+
 
     public void acao124() {
         tabelaTipos();
@@ -248,6 +304,7 @@ public class Semantico implements Constants {
         simbolo.setConstante(true);
         return simbolo;
     }
+
 
 
     public void tabelaTipos() {
