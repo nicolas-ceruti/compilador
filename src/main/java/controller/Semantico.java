@@ -6,13 +6,13 @@ import java.util.Stack;
 
 public class Semantico implements Constants {
 
-    private String operador_relacional;
+    private String operador_relacional = "";
     public static String codigo_objeto = "";
 
-    private Stack<String> pilha_tipos = new Stack<>();
-    private Stack<String> pilha_rotulos = new Stack<>();
-    private ArrayList<Token> lista_identificadores = new ArrayList<>();
-    private HashMap<String, Simbolo> lista_simbolos = new HashMap<>();
+    private final Stack<String> pilha_tipos = new Stack<>();
+    private final Stack<String> pilha_rotulos = new Stack<>();
+    private final ArrayList<Token> lista_identificadores = new ArrayList<>();
+    private final HashMap<String, Simbolo> tabela_simbolos = new HashMap<>();
 
     private int rotulo = 0;
 
@@ -118,11 +118,22 @@ public class Semantico implements Constants {
     }
 
     public void acao100() {
-        codigo_objeto += ".assembly extern mscorlib {}\n" + ".assembly _exemplo{}\n" + ".module _exemplo.exe\n" + ".class public _exemplo{\n" + ".method static public void _principal(){\n" + ".entrypoint\n";
+        codigo_objeto += """
+                .assembly extern mscorlib {}
+                .assembly _exemplo{}
+                .module _exemplo.exe
+                .class public _exemplo{
+                .method static public void _principal(){
+                .entrypoint
+                """;
     }
 
     public void acao101() {
-        codigo_objeto += "ret\n" + "}\n" + "}\n";
+        codigo_objeto += """
+                ret
+                }
+                }
+                """;
     }
 
     public void acao103() throws SemanticError {
@@ -132,7 +143,7 @@ public class Semantico implements Constants {
         }
 
         for (Token t : this.lista_identificadores) {
-            if (!lista_simbolos.containsKey(t.getLexeme())) {
+            if (!tabela_simbolos.containsKey(t.getLexeme())) {
                 throw new SemanticError(t.getLexeme() + " nao declarado", t.getPosition(), t.getLexeme());
             }
             if (tipo.equals("int64")) {
@@ -145,10 +156,10 @@ public class Semantico implements Constants {
 
     public void acao105() throws SemanticError {
         for (Token t : this.lista_identificadores) {
-            if (!lista_simbolos.containsKey(t.getLexeme())) {
+            if (!tabela_simbolos.containsKey(t.getLexeme())) {
                 throw new SemanticError(t.getLexeme() + " nao declarado", t.getPosition(), t.getLexeme());
             }
-            this.input(lista_simbolos.get(t.getLexeme()));
+            this.input(tabela_simbolos.get(t.getLexeme()));
             codigo_objeto += "stloc " + t.getLexeme() + "\n";
         }
         this.lista_identificadores.clear();
@@ -243,7 +254,7 @@ public class Semantico implements Constants {
         }
     }
 
-    public void acao109(Token token)  {
+    public void acao109(Token token) {
         String novoRotulo = this.criarNovoRotulo();
         String novoRotulo2 = this.criarNovoRotulo();
 
@@ -253,7 +264,7 @@ public class Semantico implements Constants {
 
     }
 
-    public void acao112(Token token)  {
+    public void acao112(Token token) {
         String novoRotulo = this.criarNovoRotulo();
 
         if (pilha_tipos.pop().equals("bool")) {
@@ -336,8 +347,8 @@ public class Semantico implements Constants {
 
 
     public void acao127(Token token) throws SemanticError {
-        if (this.lista_simbolos.containsKey(token.getLexeme())) {
-            Simbolo simbolo = this.lista_simbolos.get(token.getLexeme());
+        if (this.tabela_simbolos.containsKey(token.getLexeme())) {
+            Simbolo simbolo = this.tabela_simbolos.get(token.getLexeme());
             pilha_tipos.push(simbolo.getTipo());
             codigo_objeto += "ldloc " + token.getLexeme() + "\n";
             if (simbolo.getTipo().equals("int64")) {
@@ -347,21 +358,19 @@ public class Semantico implements Constants {
         throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
     }
 
-
     public void acao124() {
         empilharTipoResultadoOperacao();
         codigo_objeto += "sub\n";
     }
 
-
     public void acao102(Token token) throws SemanticError {
         for (Token t : this.lista_identificadores) {
-            if (lista_simbolos.containsKey(t.getLexeme())) {
+            if (tabela_simbolos.containsKey(t.getLexeme())) {
                 throw new SemanticError(token.getLexeme() + " ja declarado", token.getPosition(), token.getLexeme());
             }
 
             Simbolo simbolo = this.createSimbolo(t, token);
-            lista_simbolos.put(t.getLexeme(), simbolo);
+            tabela_simbolos.put(t.getLexeme(), simbolo);
             codigo_objeto += ".locals (" + simbolo.getTipo() + " " + simbolo.getIdentificador() + ")\n";
         }
         this.lista_identificadores.clear();
