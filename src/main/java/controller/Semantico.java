@@ -10,9 +10,9 @@ public class Semantico implements Constants {
     public static String codigo_objeto = "";
 
     private Stack<String> pilha_tipos = new Stack<>();
-    private HashMap<String, Simbolo> pilha_rotulos = new HashMap<>();
+    private Stack<Simbolo> pilha_rotulos = new Stack<>();
     private ArrayList<Token> lista_identificadores = new ArrayList<>();
-    private ArrayList<Simbolo> lista_simbolos = new ArrayList<>();
+    private HashMap<String, Simbolo> lista_simbolos = new HashMap<>();
 
     public void executeAction(int action, Token token) throws SemanticError {
         switch (action) {
@@ -216,6 +216,7 @@ public class Semantico implements Constants {
         tabelaTipos();
         codigo_objeto += "sub\n";
     }
+
 
 
     public void tabelaTipos() {
