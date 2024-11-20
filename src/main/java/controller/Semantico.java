@@ -1,21 +1,20 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
-public class Semantico implements Constants
-{
+public class Semantico implements Constants {
 
     private String operador_relacional;
     public static String codigo_objeto = "";
 
     private Stack<String> pilha_tipos = new Stack<>();
-    private Stack<String> pilha_rotulos = new Stack<>();
+    private HashMap<String, Simbolo> pilha_rotulos = new HashMap<>();
     private ArrayList<Token> lista_identificadores = new ArrayList<>();
     private ArrayList<Simbolo> lista_simbolos = new ArrayList<>();
 
-    public void executeAction(int action, Token token)	throws SemanticError
-    {
+    public void executeAction(int action, Token token) throws SemanticError {
         switch (action) {
             case 100:
                 acao100();
@@ -26,8 +25,17 @@ public class Semantico implements Constants
             case 108:
                 acao108();
                 break;
+            case 121:
+                acao121(token);
+                break;
+            case 122:
+                acao122();
+                break;
             case 123:
                 acao123();
+                break;
+            case 127:
+                acao127(token);
                 break;
             case 128:
                 acao128(token);
@@ -62,10 +70,47 @@ public class Semantico implements Constants
         this.print(tipo);
     }
 
+    public void acao121(Token token) {
+        operador_relacional = token.getLexeme();
+    }
+
+    public void acao122() {
+        pilha_tipos.pop();
+        pilha_tipos.pop();
+        pilha_tipos.push("bool");
+
+        switch (this.operador_relacional) {
+            case "==":
+                codigo_objeto += "ceq\n";
+                break;
+            case "!=":
+                codigo_objeto += "ceq\n" + "ldc.i4.0\n" + "ceq\n";
+                break;
+            case ">":
+                codigo_objeto += "cgt\n";
+                break;
+            case "<":
+                codigo_objeto += "clt\n";
+                break;
+        }
+    }
 
     public void acao123() {
         tabelaTipos();
         codigo_objeto += "add\n";
+    }
+
+    public void acao127(Token token) throws SemanticError {
+        if (this.pilha_rotulos.containsKey(token.getLexeme())) {
+            Simbolo simbolo = this.pilha_rotulos.get(token.getLexeme());
+            if (!simbolo.isConstante()) {
+                this.adicionaVariavelPilha(token, simbolo);
+            } else {
+                this.adicionaConstantePilha(simbolo);
+            }
+            return;
+        }
+        throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
     }
 
     public void acao128(Token token) {
@@ -86,8 +131,8 @@ public class Semantico implements Constants
             return;
         }
         pilha_tipos.push("int64");
-        return;
     }
+
     public void print(String tipo) {
         codigo_objeto += "call void [mscorlib]System.Console::Write(" + tipo + ")\n";
     }
@@ -111,8 +156,7 @@ public class Semantico implements Constants
     }
 
     public void adicionaInt64(String valor) {
-        codigo_objeto += "ldc.i8 " + valor + "\n" +
-                "conv.r8\n";
+        codigo_objeto += "ldc.i8 " + valor + "\n" + "conv.r8\n";
         pilha_tipos.push("int64");
     }
 
