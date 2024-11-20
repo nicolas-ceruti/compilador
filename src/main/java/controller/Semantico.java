@@ -10,9 +10,11 @@ public class Semantico implements Constants {
     public static String codigo_objeto = "";
 
     private Stack<String> pilha_tipos = new Stack<>();
-    private Stack<Simbolo> pilha_rotulos = new Stack<>();
+    private Stack<String> pilha_rotulos = new Stack<>();
     private ArrayList<Token> lista_identificadores = new ArrayList<>();
     private HashMap<String, Simbolo> lista_simbolos = new HashMap<>();
+
+    int rotulo = 0;
 
     public void executeAction(int action, Token token) throws SemanticError {
         switch (action) {
@@ -87,6 +89,12 @@ public class Semantico implements Constants {
                 break;
             case 104:
                 acao104(token);
+                break;
+            case 102:
+                acao102(token);
+                break;
+            case 109:
+                acao109(token);
                 break;
         }
     }
@@ -184,6 +192,22 @@ public class Semantico implements Constants {
                 codigo_objeto += "clt\n";
                 break;
         }
+    }
+
+    public void acao109(Token token) throws SemanticError {
+        String novoRotulo = this.criarNovoRotulo();
+        pilha_rotulos.push(novoRotulo);
+        String novoRotulo2 = this.criarNovoRotulo();
+
+        pilha_rotulos.push(novoRotulo2);
+
+
+    }
+
+    public String criarNovoRotulo() {
+        rotulo++;
+        String novoRotulo = "novo_rotulo" + rotulo;
+        return novoRotulo;
     }
 
     public void acao123() {
