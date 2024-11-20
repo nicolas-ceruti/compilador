@@ -28,7 +28,7 @@ public class Semantico implements Constants {
                 acao103();
                 break;
             case 105:
-                acao105();
+                acao105(token);
                 break;
             case 106:
                 acao106(token);
@@ -154,14 +154,14 @@ public class Semantico implements Constants {
         this.lista_identificadores.clear();
     }
 
-    public void acao105() throws SemanticError {
-        for (Token t : this.lista_identificadores) {
-            if (!tabela_simbolos.containsKey(t.getLexeme())) {
-                throw new SemanticError(t.getLexeme() + " nao declarado", t.getPosition(), t.getLexeme());
+    public void acao105(Token token) throws SemanticError {
+            if (!tabela_simbolos.containsKey(token.getLexeme())) {
+                throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
             }
-            this.input(tabela_simbolos.get(t.getLexeme()));
-            codigo_objeto += "stloc " + t.getLexeme() + "\n";
-        }
+
+            this.input(tabela_simbolos.get(token.getLexeme()));
+            codigo_objeto += "stloc " + token.getLexeme() + "\n";
+
         this.lista_identificadores.clear();
     }
 
@@ -182,7 +182,7 @@ public class Semantico implements Constants {
 
     public void acao106(Token token) {
         codigo_objeto += "ldstr " + token.getLexeme() + "\n";
-        this.write("string");
+        codigo_objeto += "call void [mscorlib]System.Console::Write(" + "string" + ")\n";
     }
 
     public void acao108() {
@@ -190,7 +190,7 @@ public class Semantico implements Constants {
         if (tipo.equals("int64")) {
             codigo_objeto += "conv.i8\n";
         }
-        this.write(tipo);
+        codigo_objeto += "call void [mscorlib]System.Console::Write(" + tipo + ")\n";
     }
 
     public void acao110() {
@@ -354,8 +354,9 @@ public class Semantico implements Constants {
             if (simbolo.getTipo().equals("int64")) {
                 codigo_objeto += "conv.r8\n";
             }
+        }else{
+            throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
         }
-        throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
     }
 
     public void acao124() {
@@ -403,9 +404,7 @@ public class Semantico implements Constants {
         pilha_tipos.push("int64");
     }
 
-    public void write(String tipo) {
-        codigo_objeto += "call void [mscorlib]System.Console::Write(" + tipo + ")\n";
-    }
+
 
     public void adicionaInt64(String valor) {
         codigo_objeto += "ldc.i8 " + valor + "\n" + "conv.r8\n";

@@ -186,7 +186,7 @@ public class Compiler extends JFrame {
             adicionarMensagem(message);
         } catch (SemanticError e) {
             //Trata erros semânticos
-            System.out.println("Erro Semantico");
+            System.out.println("Erro Semantico" + e.toString());
         }
     }
 
