@@ -43,6 +43,42 @@ public class Semantico implements Constants {
             case 129:
                 acao129(token);
                 break;
+            case 130:
+                acao130(token);
+                break;
+            case 118:
+                acao118();
+                break;
+            case 119:
+                acao119();
+                break;
+            case 131:
+                acao131();
+                break;
+            case 124:
+                acao124();
+                break;
+            case 125:
+                acao125();
+                break;
+            case 126:
+                acao126();
+                break;
+            case 120:
+                acao120();
+                break;
+            case 116:
+                acao116();
+                break;
+            case 117:
+                acao117();
+                break;
+            case 107:
+                acao107();
+                break;
+            case 104:
+                acao104(token);
+                break;
         }
     }
 
@@ -100,6 +136,69 @@ public class Semantico implements Constants {
         codigo_objeto += "add\n";
     }
 
+    public void acao128(Token token) {
+        adicionaInt64(token.getLexeme());
+    }
+
+    public void acao129(Token token) {
+        adicionaFloat64(token.getLexeme());
+    }
+
+    public void acao130(Token token) {
+        adicionaString(token.getLexeme());
+    }
+
+    public void acao118() {
+        adicionaBool("1");
+    }
+
+    public void acao119() {
+        adicionaBool("0");
+    }
+
+    public void acao131() {
+        codigo_objeto += "ldc.i8 -1\n";
+        codigo_objeto += "conv.r8\n";
+        codigo_objeto += "mul\n";
+    }
+
+    public void acao125() {
+        tabelaTipos();
+        codigo_objeto += "mul\n";
+    }
+
+    public void acao126() {
+        tabelaTipos();
+        codigo_objeto += "div\n";
+    }
+
+    public void acao120() {
+        codigo_objeto += "ldc.i4.1\nxor\n";
+    }
+
+    public void acao116() {
+        pilha_tipos.pop();
+        pilha_tipos.pop();
+        pilha_tipos.push("bool");
+        codigo_objeto += "and\n";
+    }
+
+    public void acao117() {
+        pilha_tipos.pop();
+        pilha_tipos.pop();
+        pilha_tipos.push("bool");
+        codigo_objeto += "or\n";
+    }
+
+    public void acao107() {
+        codigo_objeto += "\n";
+    }
+
+    public void acao104(Token token) {
+        lista_identificadores.add(token);
+    }
+
+
     public void acao127(Token token) throws SemanticError {
         if (this.pilha_rotulos.containsKey(token.getLexeme())) {
             Simbolo simbolo = this.pilha_rotulos.get(token.getLexeme());
@@ -113,13 +212,11 @@ public class Semantico implements Constants {
         throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
     }
 
-    public void acao128(Token token) {
-        adicionaInt64(token.getLexeme());
+    public void acao124() {
+        tabelaTipos();
+        codigo_objeto += "sub\n";
     }
 
-    public void acao129(Token token) {
-        adicionaFloat64(token.getLexeme());
-    }
 
     public void tabelaTipos() {
         String operador2 = pilha_tipos.pop();
