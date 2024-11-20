@@ -14,6 +14,7 @@ public class Semantico implements Constants {
     private ArrayList<Token> lista_identificadores = new ArrayList<>();
     private HashMap<String, Simbolo> lista_simbolos = new HashMap<>();
 
+
     private int rotulo = 0;
 
     public void executeAction(int action, Token token) throws SemanticError {
@@ -101,6 +102,12 @@ public class Semantico implements Constants {
                 break;
             case 104:
                 acao104(token);
+                break;
+            case 102:
+                acao102(token);
+                break;
+            case 109:
+                acao109(token);
                 break;
         }
     }
@@ -229,6 +236,18 @@ public class Semantico implements Constants {
                 break;
         }
     }
+
+    public void acao109(Token token) throws SemanticError {
+        String novoRotulo = this.criarNovoRotulo();
+        pilha_rotulos.push(novoRotulo);
+        String novoRotulo2 = this.criarNovoRotulo();
+
+        pilha_rotulos.push(novoRotulo2);
+
+
+    }
+
+
 
     public void acao123() {
         tabelaTipos();
