@@ -7,7 +7,7 @@ import java.util.Stack;
 public class Semantico implements Constants {
 
     private String operador_relacional = "";
-    public static String codigo_objeto = "";
+    public String codigo_objeto = "";
 
     private final Stack<String> pilha_tipos = new Stack<>();
     private final Stack<String> pilha_rotulos = new Stack<>();
@@ -120,12 +120,12 @@ public class Semantico implements Constants {
     public void acao100() {
         codigo_objeto += """
                 .assembly extern mscorlib {}
-                .assembly _exemplo{}
-                .module _exemplo.exe
-                .class public _exemplo{
-                .method static public void _principal(){
-                .entrypoint
-                """;
+               .assembly _codigo_objeto{}
+               .module _codigo_objeto.exe
+               .class public UNICA{
+               .method static public void _principal(){
+               .entrypoint
+               """;
     }
 
     public void acao101() {
@@ -155,12 +155,12 @@ public class Semantico implements Constants {
     }
 
     public void acao105(Token token) throws SemanticError {
-            if (!tabela_simbolos.containsKey(token.getLexeme())) {
-                throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
-            }
+        if (!tabela_simbolos.containsKey(token.getLexeme())) {
+            throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
+        }
 
-            this.input(tabela_simbolos.get(token.getLexeme()));
-            codigo_objeto += "stloc " + token.getLexeme() + "\n";
+        this.input(tabela_simbolos.get(token.getLexeme()));
+        codigo_objeto += "stloc " + token.getLexeme() + "\n";
 
         this.lista_identificadores.clear();
     }
@@ -351,7 +351,7 @@ public class Semantico implements Constants {
             if (simbolo.getTipo().equals("int64")) {
                 codigo_objeto += "conv.r8\n";
             }
-        }else{
+        } else {
             throw new SemanticError(token.getLexeme() + " nao declarado", token.getPosition(), token.getLexeme());
         }
     }
@@ -400,7 +400,6 @@ public class Semantico implements Constants {
         }
         pilha_tipos.push("int64");
     }
-
 
 
     public void adicionaInt64(String valor) {

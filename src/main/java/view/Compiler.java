@@ -175,7 +175,7 @@ public class Compiler extends JFrame {
             }
 
             try (FileWriter fileWriter = new FileWriter(fileName)) {
-                fileWriter.write(Semantico.codigo_objeto);
+                fileWriter.write(semantico.codigo_objeto);
                 adicionarMensagem("Arquivo salvo como " + fileName);
             } catch (IOException ioException) {
                 adicionarMensagem("Erro ao salvar o arquivo: " + ioException.getMessage());
