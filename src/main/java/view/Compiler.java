@@ -157,7 +157,7 @@ public class Compiler extends JFrame {
             Token t;
             while ((t = lexico.nextToken()) != null) {
                 if (t.getId() == 6 && ScannerConstants.verifWord(t.getLexeme())) {
-                        throw new LexicalError(t.getLexeme() + " palavra reservada inválida" , t.getPosition());
+                    throw new LexicalError(t.getLexeme() + " palavra reservada inválida", t.getPosition());
                 }
             }
 
@@ -166,8 +166,12 @@ public class Compiler extends JFrame {
 
             adicionarMensagem("Programa compilado com sucesso!");
 
-
-            String fileName = "codigo_objeto.il";
+            String fileName;
+            if (currentFile != null) {
+                fileName = currentFile.getPath().replace(".txt", "") + ".il";
+            } else {
+                fileName = "codigo_objeto.il";
+            }
 
             File file = new File(fileName);
             if (file.exists()) {
@@ -200,7 +204,7 @@ public class Compiler extends JFrame {
 
             adicionarMensagem(message);
         } catch (SemanticError e) {
-            int line =  ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
+            int line = ScannerConstants.calculateLineFromPosition(e.getPosition(), editor.getText());
             adicionarMensagem("Erro na linha " + line + " - " + e.getMessage());
         }
     }
@@ -213,6 +217,7 @@ public class Compiler extends JFrame {
         editor.setText(null);
         contarLinhas();
         limparMenssagens();
+        currentFile = null;
         arquivo.setText(null);
     }
 

@@ -119,13 +119,13 @@ public class Semantico implements Constants {
 
     public void acao100() {
         codigo_objeto += """
-                .assembly extern mscorlib {}
-               .assembly _codigo_objeto{}
-               .module _codigo_objeto.exe
-               .class public UNICA{
-               .method static public void _principal(){
-               .entrypoint
-               """;
+                 .assembly extern mscorlib {}
+                .assembly _codigo_objeto{}
+                .module _codigo_objeto.exe
+                .class public UNICA{
+                .method static public void _principal(){
+                .entrypoint
+                """;
     }
 
     public void acao101() {
@@ -168,7 +168,8 @@ public class Semantico implements Constants {
     public void input(Simbolo simbolo) {
         codigo_objeto += "call string [mscorlib]System.Console::ReadLine()\n";
         if (!simbolo.getTipo().equals("string")) {
-            codigo_objeto += "call " + simbolo.getTipo() + " [mscorlib]System." + this.getClasse(simbolo.getTipo()) + "::Parse(string)\n";
+            codigo_objeto += "call " + simbolo.getTipo() + " [mscorlib]System." //
+                    + this.getClasse(simbolo.getTipo()) + "::Parse(string)\n";
         }
     }
 
