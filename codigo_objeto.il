@@ -4,25 +4,40 @@
 .class public UNICA{
 .method static public void _principal(){
 .entrypoint
-.locals (int64 i_lado)
-.locals (int64 i_area)
-ldstr "acho q é: "
-call void [mscorlib]System.Console::Write(string)
-call string [mscorlib]System.Console::ReadLine()
-call int64 [mscorlib]System.Int64::Parse(string)
-stloc i_lado
-ldloc i_lado
+.locals (int64 i_contador)
+ldc.i8 0
 conv.r8
-ldloc i_lado
-conv.r8
-mul
 conv.i8
-stloc i_area
-ldloc i_area
+stloc i_contador
+novo_rotulo1:
+ldloc i_contador
 conv.r8
 conv.i8
 call void [mscorlib]System.Console::Write(int64)
-
+ldloc i_contador
+conv.r8
+ldc.i8 10
+conv.r8
+ceq
+brfalse novo_rotulo3
+ldstr "O contador chegou a 10"
+call void [mscorlib]System.Console::Write(string)
+br novo_rotulo2 
+novo_rotulo3:
+novo_rotulo2:
+ldloc i_contador
+conv.r8
+ldc.i8 1
+conv.r8
+add
+conv.i8
+stloc i_contador
+ldloc i_contador
+conv.r8
+ldc.i8 10
+conv.r8
+cgt
+brfalse novo_rotulo1
 ret
 }
 }
