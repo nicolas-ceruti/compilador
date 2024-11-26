@@ -205,11 +205,11 @@
               <foreground color="-16777216"/>
               <horizontalTextPosition value="0"/>
               <icon value="corte.png"/>
-              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Colar&lt;br&gt;[Ctrl + X]&lt;/div&gt;&lt;/html&gt;"/>
+              <label value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Recortar&lt;br&gt;[Ctrl + X]&lt;/div&gt;&lt;/html&gt;"/>
               <margin top="5" left="5" bottom="5" right="0"/>
               <minimumSize width="50" height="60"/>
               <preferredSize width="100" height="60"/>
-              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Colar&lt;br&gt;[Ctrl + X]&lt;/div&gt;&lt;/html&gt;"/>
+              <text value="&lt;html&gt;&lt;div style='text-align: center;'&gt;Recortar&lt;br&gt;[Ctrl + X]&lt;/div&gt;&lt;/html&gt;"/>
               <verticalTextPosition value="3"/>
             </properties>
           </component>

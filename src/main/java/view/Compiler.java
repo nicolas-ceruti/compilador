@@ -286,7 +286,7 @@ public class Compiler extends JFrame {
 
     private void acaoBotaoRecortar() {
         try {
-            editor.selectAll();
+            editor.getSelectedText();
             editor.cut();
             contarLinhas();
             adicionarMensagem("Texto Recortado");
